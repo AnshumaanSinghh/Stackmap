@@ -1,0 +1,34 @@
+{
+  "name": "stackmap",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "description": "AI-native system design workspace",
+  "keywords": [
+    "architecture",
+    "ai",
+    "system-design",
+    "canvas",
+    "collaboration",
+    "realtime"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.4",
+    "prettier": "^3.3.3",
+    "@types/node": "^20.14.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0"
+  }
+}

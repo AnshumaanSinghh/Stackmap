@@ -1,0 +1,16 @@
+# Web Frontend
+FROM node:20-alpine AS web-builder
+WORKDIR /app
+COPY . .
+RUN npm install -g pnpm
+RUN pnpm install
+RUN pnpm run build --filter=web
+
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=web-builder /app/apps/web/.next /app/.next
+COPY --from=web-builder /app/apps/web/public /app/public
+COPY --from=web-builder /app/apps/web/package.json /app/package.json
+
+EXPOSE 3000
+CMD ["npm", "start"]

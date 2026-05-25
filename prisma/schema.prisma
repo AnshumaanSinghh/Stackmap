@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - accounts for the workspace
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  boards    Board[]
+  comments  Comment[]
+  sessions  AISession[]
+
+  @@map("users")
+}
+
+// Board model - the diagram/workspace
+model Board {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ownerId     String
+  owner       User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  objects     BoardObject[]
+  comments    Comment[]
+  versions    BoardVersion[]
+
+  @@index([ownerId])
+  @@map("boards")
+}
+
+// Objects on the canvas
+model BoardObject {
+  id        String   @id @default(cuid())
+  boardId   String
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  // Object type: rectangle, ellipse, arrow, text, sticky
+  type      String
+
+  // Position
+  x         Float
+  y         Float
+  rotation  Float    @default(0)
+
+  // Size
+  width     Float?
+  height    Float?
+
+  // Data - flexible JSON for different object types
+  data      Json
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+
+  @@index([boardId])
+  @@map("board_objects")
+}
+
+// Comments/annotations on objects
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  boardId   String
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  objectId  String?  // Reference to BoardObject if commenting on a specific element
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([boardId])
+  @@index([authorId])
+  @@map("comments")
+}
+
+// AI Review sessions
+model AISession {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  boardId   String
+  boardData Json     // Snapshot of board for the review
+
+  type      String   // 'review', 'generate', 'cleanup', 'search'
+  prompt    String
+  response  String?
+
+  status    String   @default("pending") // pending, processing, completed, failed
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("ai_sessions")
+}
+
+// Board versions for history/undo
+model BoardVersion {
+  id        String   @id @default(cuid())
+  boardId   String
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  snapshot  Json     // Full board state
+  message   String?  // Version message
+
+  createdAt DateTime @default(now())
+
+  @@index([boardId])
+  @@map("board_versions")
+}
