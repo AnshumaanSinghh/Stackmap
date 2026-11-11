@@ -18,9 +18,14 @@ const CONCURRENCY = 12;
 const MAX_ATTEMPTS = 5;
 const TIMEOUT_MS = 20_000;
 
-// Names a registry genuinely cannot confirm. Keep this empty unless there is no public API.
+// Names no registry can confirm any more. Every entry needs a reason; keep this list short.
 // Format: '<ecosystem>:<name>' -> reason.
-const ALLOW_UNVERIFIED = new Map([]);
+const ALLOW_UNVERIFIED = new Map([
+  // Images no registry serves publicly any more, kept because existing compose files still use them.
+  ['docker:minio/minio', 'MinIO stopped distributing community images in late 2025; still referenced by many compose files'],
+  ['docker:minio/mc', 'MinIO client image, withdrawn with the server image in late 2025'],
+  ['docker:vectorized/redpanda', 'legacy name of redpandadata/redpanda, still common in older compose files'],
+]);
 
 // Images (stored without registry host) that live on a registry other than Docker Hub. When
 // Docker Hub does not have them, they are checked through that registry's v2 API with an
