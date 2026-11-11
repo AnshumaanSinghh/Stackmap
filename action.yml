@@ -11,7 +11,7 @@ inputs:
     required: false
     default: "."
   comment:
-    description: On pull requests, post (and keep updating) one comment that lists architecture changes, with a diagram. Needs `pull-requests: write`.
+    description: "On pull requests, post (and keep updating) one comment that lists architecture changes, with a diagram. Needs `pull-requests: write`."
     required: false
     default: "true"
   comment-when:
