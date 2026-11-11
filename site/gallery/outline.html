@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Stackmap 1.0.0">
+<title>Outline · Stackmap</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%223.5%22%20width%3D%2218%22%20height%3D%224.5%22%20rx%3D%222.25%22%20fill%3D%22%232a78d6%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%229.75%22%20width%3D%2212%22%20height%3D%224.5%22%20rx%3D%222.25%22%20fill%3D%22%23eb6834%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2216%22%20width%3D%2215%22%20height%3D%224.5%22%20rx%3D%222.25%22%20fill%3D%22%231baf7a%22%2F%3E%3Cpath%20d%3D%22M20%2012v6.25%22%20stroke%3D%22%2352514e%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2211.2%22%20r%3D%221.6%22%20fill%3D%22%2352514e%22%2F%3E%3C%2Fsvg%3E">
+<style>
+:root{color-scheme:light;--sm-page:#f9f9f7;--sm-surface:#fcfcfb;--sm-card:#ffffff;--sm-ink:#0b0b0b;--sm-ink2:#52514e;--sm-muted:#6f6d68;--sm-hairline:#e1e0d9;--sm-axis:#c3c2b7;--sm-border:rgba(11,11,11,0.12);--sm-edge:#9b998f;--sm-edgeHi:#2a2a28;--sm-app:#2a78d6;--sm-service:#eb6834;--sm-data:#1baf7a;--sm-worker:#eda100;--sm-external:#e87ba4;--sm-neutral:#898781;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--sm-page:#0d0d0d;--sm-surface:#1a1a19;--sm-card:#232322;--sm-ink:#f0efec;--sm-ink2:#c3c2b7;--sm-muted:#a3a199;--sm-hairline:#2c2c2a;--sm-axis:#383835;--sm-border:rgba(255,255,255,0.12);--sm-edge:#6b6a64;--sm-edgeHi:#f0efec;--sm-app:#3987e5;--sm-service:#d95926;--sm-data:#199e70;--sm-worker:#c98500;--sm-external:#d55181;--sm-neutral:#898781;}}
+:root[data-theme="dark"]{color-scheme:dark;--sm-page:#0d0d0d;--sm-surface:#1a1a19;--sm-card:#232322;--sm-ink:#f0efec;--sm-ink2:#c3c2b7;--sm-muted:#a3a199;--sm-hairline:#2c2c2a;--sm-axis:#383835;--sm-border:rgba(255,255,255,0.12);--sm-edge:#6b6a64;--sm-edgeHi:#f0efec;--sm-app:#3987e5;--sm-service:#d95926;--sm-data:#199e70;--sm-worker:#c98500;--sm-external:#d55181;--sm-neutral:#898781;}
+:root[data-theme="light"]{color-scheme:light}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--sm-page);color:var(--sm-ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,summary{font:inherit;color:inherit}
+a{color:var(--sm-app)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
+
+.bar{position:relative;z-index:3;display:flex;align-items:center;gap:10px;flex-wrap:nowrap;padding:10px 16px;background:var(--sm-surface);border-bottom:1px solid var(--sm-hairline)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.brand svg{width:22px;height:22px}
+.brand .proj{font-weight:600;color:var(--sm-ink2);max-width:28ch;overflow:hidden;text-overflow:ellipsis}
+.brand .sep{color:var(--sm-axis);font-weight:400}
+.stats{flex:1 1 0;color:var(--sm-muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.spacer{flex:0}
+.search{position:relative;flex:0 1 240px;min-width:140px}
+.search input{width:100%;height:32px;padding:0 30px 0 10px;border-radius:8px;border:1px solid var(--sm-border);background:var(--sm-card);outline:none}
+.search input:focus{border-color:var(--sm-app);box-shadow:0 0 0 3px color-mix(in srgb,var(--sm-app) 22%,transparent)}
+.search kbd{position:absolute;right:8px;top:7px;font:11px ui-monospace,monospace;color:var(--sm-muted);border:1px solid var(--sm-hairline);border-radius:4px;padding:0 4px;background:var(--sm-surface)}
+.seg{display:inline-flex;border:1px solid var(--sm-border);border-radius:8px;overflow:hidden;background:var(--sm-card)}
+.seg button{border:0;background:none;height:30px;padding:0 10px;cursor:pointer;font-size:12.5px;color:var(--sm-ink2)}
+.seg button[aria-pressed="true"]{background:var(--sm-ink);color:var(--sm-surface)}
+.btn{height:32px;min-width:32px;padding:0 10px;border-radius:8px;border:1px solid var(--sm-border);background:var(--sm-card);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12.5px}
+.btn:hover{border-color:var(--sm-axis)}
+.btn svg{width:16px;height:16px}
+.menu{position:relative}
+.menu summary{list-style:none}
+.menu summary::-webkit-details-marker{display:none}
+.menu .items{position:absolute;right:0;top:38px;min-width:190px;background:var(--sm-card);border:1px solid var(--sm-border);border-radius:10px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.14);z-index:5}
+.menu .items button{display:block;width:100%;text-align:left;border:0;background:none;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:13px}
+.menu .items button:hover{background:var(--sm-surface)}
+.menu .items small{display:block;color:var(--sm-muted);font-size:11.5px}
+
+main{position:relative;height:calc(100% - 53px);display:flex}
+#stage{position:relative;flex:1;overflow:hidden;background:var(--sm-surface);cursor:grab;touch-action:none}
+#stage.panning{cursor:grabbing}
+#canvas{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+#canvas svg{display:block}
+.sm-node{cursor:pointer;outline:none}
+.sm-node .sm-card{transition:stroke .12s}
+.sm-node:hover .sm-card,.sm-node:focus-visible .sm-card{stroke:var(--sm-axis);stroke-width:1.5}
+.sm-node.sm-sel .sm-card{stroke:var(--sm-ink);stroke-width:2}
+.sm-dim{opacity:.16;transition:opacity .15s}
+.sm-node,.sm-edge{transition:opacity .15s}
+.sm-edge.sm-hi{stroke:var(--sm-edgeHi);stroke-width:2;marker-end:url(#sm-arrow-hi)}
+.sm-hit{cursor:pointer}
+.sm-match .sm-card{stroke:var(--sm-app);stroke-width:2}
+
+.zoom{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.zoom .btn{width:34px;padding:0;background:var(--sm-card)}
+.legend{position:absolute;left:14px;bottom:14px;z-index:2;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;max-width:calc(100% - 90px);padding:8px 12px;background:color-mix(in srgb,var(--sm-card) 92%,transparent);border:1px solid var(--sm-hairline);border-radius:10px;font-size:12px;color:var(--sm-ink2)}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .ln{display:inline-block;width:24px;height:0;border-top:2px solid var(--sm-edge);margin-right:6px;vertical-align:3px}
+.legend .ln.dash{border-top-style:dashed}
+.legend .ln.dot{border-top-style:dotted}
+.legend .meta{color:var(--sm-muted)}
+.legend.collapsed .item{display:none}
+.hint{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:2;background:var(--sm-ink);color:var(--sm-surface);padding:6px 12px;border-radius:999px;font-size:12.5px;opacity:0;pointer-events:none;transition:opacity .2s}
+.hint.show{opacity:.92}
+
+#panel{position:relative;width:380px;max-width:100%;flex:none;overflow:auto;background:var(--sm-card);border-left:1px solid var(--sm-hairline);padding:16px 18px 40px}
+#panel[hidden]{display:none}
+.p-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.p-icon{flex:none;width:36px;height:36px;border-radius:9px;display:grid;place-items:center}
+.p-icon svg{width:20px;height:20px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.p-title{font-size:17px;font-weight:700;line-height:1.25;word-break:break-word}
+.p-kind{color:var(--sm-muted);font-size:12.5px}
+.p-close{margin-left:auto;flex:none}
+.p-desc{color:var(--sm-ink2);margin:6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--sm-hairline);color:var(--sm-ink2);background:var(--sm-surface);white-space:nowrap}
+.chip.c-imported{border-color:color-mix(in srgb,var(--sm-data) 55%,transparent)}
+.chip.c-declared{border-style:dashed}
+.chip.c-inferred{border-style:dotted}
+h3{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--sm-muted);margin:18px 0 6px;font-weight:650}
+.rel{list-style:none;margin:0;padding:0}
+.rel li{border:1px solid var(--sm-hairline);border-radius:9px;margin-bottom:6px;overflow:hidden}
+.rel summary{cursor:pointer;padding:7px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rel summary::-webkit-details-marker{display:none}
+.rel summary::before{content:"›";color:var(--sm-muted);transition:transform .15s;display:inline-block}
+.rel details[open] summary::before{transform:rotate(90deg)}
+.rel .name{font-weight:600}
+.rel .go{margin-left:auto;font-size:11.5px;color:var(--sm-app);background:none;border:0;cursor:pointer;padding:0}
+.rel .body{padding:0 10px 8px}
+.ev{list-style:none;margin:0;padding:0}
+.ev li{padding:7px 0;border-top:1px solid var(--sm-hairline)}
+.ev li:first-child{border-top:0}
+.ev .why{font-size:11.5px;color:var(--sm-muted)}
+.ev .loc{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;word-break:break-all}
+.ev pre{margin:4px 0 0;padding:6px 8px;background:var(--sm-surface);border:1px solid var(--sm-hairline);border-radius:6px;overflow:auto;font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+.more{color:var(--sm-muted);font-size:12px;margin-top:4px}
+.note{font-size:12.5px;color:var(--sm-ink2);background:var(--sm-surface);border:1px solid var(--sm-hairline);border-radius:8px;padding:8px 10px;margin:8px 0}
+.env{display:flex;flex-wrap:wrap;gap:4px}
+.env code{background:var(--sm-surface);border:1px solid var(--sm-hairline);border-radius:5px;padding:1px 5px;font-size:11.5px}
+.empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--sm-ink2);padding:24px}
+.empty h2{color:var(--sm-ink);margin:0 0 6px;font-size:18px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--sm-ink);color:var(--sm-surface);padding:8px 14px;border-radius:8px;font-size:13px;z-index:9;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (max-width:760px){
+  .bar{gap:8px;padding:8px 12px;flex-wrap:wrap}
+  .stats{order:5;flex-basis:100%}
+  .search{flex:1 1 140px}
+  .search kbd{display:none}
+  main{height:calc(100% - 92px)}
+  #panel{position:absolute;left:0;right:0;bottom:0;width:auto;max-height:62%;border-left:0;border-top:1px solid var(--sm-hairline);border-radius:14px 14px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.18);z-index:4}
+  .legend{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.bar,.zoom,.legend,#panel{display:none}main{height:auto}#stage{overflow:visible}}
+
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3.5" width="18" height="4.5" rx="2.25" fill="var(--sm-app)"/><rect x="3" y="9.75" width="12" height="4.5" rx="2.25" fill="var(--sm-service)"/><rect x="3" y="16" width="15" height="4.5" rx="2.25" fill="var(--sm-data)"/><path d="M20 12v6.25" stroke="var(--sm-ink2)" stroke-width="1.6" stroke-linecap="round"/><circle cx="20" cy="11.2" r="1.6" fill="var(--sm-ink2)"/></svg><span>Stackmap</span><span class="sep">/</span><span class="proj" id="proj"></span></div>
+  <div class="stats" id="stats"></div>
+  <div class="spacer"></div>
+  <label class="search"><span class="vh">Search the map</span><input id="q" type="search" placeholder="Search" autocomplete="off" spellcheck="false"><kbd>/</kbd></label>
+  <div class="seg" id="viewseg" role="group" aria-label="View"><button data-view="services" aria-pressed="true" title="Fold internal libraries into the apps that use them">Services</button><button data-view="all" aria-pressed="false" title="Show internal libraries too">Everything</button></div>
+  <button class="btn" id="theme" title="Toggle dark mode" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
+  <details class="menu" id="exportmenu"><summary class="btn">Export</summary><div class="items">
+    <button id="ex-svg">SVG image<small>For docs and slides</small></button>
+    <button id="ex-png">PNG image<small>2× resolution</small></button>
+    <button id="ex-mmd">Copy Mermaid<small>Renders on GitHub and GitLab</small></button>
+    <button id="ex-json">JSON<small>The full graph with evidence</small></button>
+  </div></details>
+</header>
+<main>
+  <div id="stage" tabindex="-1">
+    <div id="canvas"></div>
+    <div class="empty" id="empty" hidden><div><h2>Nothing to map yet</h2><p>Stackmap found no apps, services or dependencies here.<br>Run it from the root of a project.</p></div></div>
+    <div class="hint" id="hint" role="status"></div>
+    <div class="legend" aria-label="Legend">
+      <span class="item"><span class="sw" style="background:var(--sm-app)"></span>Apps</span>
+      <span class="item"><span class="sw" style="background:var(--sm-service)"></span>Services</span>
+      <span class="item"><span class="sw" style="background:var(--sm-worker)"></span>Workers</span>
+      <span class="item"><span class="sw" style="background:var(--sm-data)"></span>Data</span>
+      <span class="item"><span class="sw" style="background:var(--sm-external)"></span>Third-party</span>
+      <span class="item"><span class="ln"></span>in code</span>
+      <span class="item"><span class="ln dash"></span>declared only</span>
+      <span class="item"><span class="ln dot"></span>inferred</span>
+      <span class="item meta" id="meta"></span>
+    </div>
+    <div class="zoom"><button class="btn" id="zin" aria-label="Zoom in">+</button><button class="btn" id="zout" aria-label="Zoom out">−</button><button class="btn" id="zfit" aria-label="Fit to screen" title="Fit (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
+  </div>
+  <aside id="panel" hidden aria-live="polite"></aside>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script type="application/json" id="sm-data">{"graph":{"schema":"stackmap/1","tool":{"name":"stackmap","version":"1.0.0"},"project":{"name":"Outline","repoUrl":"https://github.com/outline/outline","commit":"309dd022f6ff5c67ce5d264e081fd6c559243163","branch":"main","prefix":"","generatedAt":"2026-11-11T09:05:07.810Z"},"summary":{"units":1,"apps":1,"services":0,"workers":0,"libraries":0,"datastores":3,"external":18,"edges":21,"languages":[{"name":"TypeScript","files":2380},{"name":"JavaScript","files":74}],"deploy":["Docker","Heroku","Docker Compose"],"filesListed":2718,"sourceFilesRead":1968,"ms":448},"nodes":[{"id":"unit:.","unit":true,"column":"apps","name":"outline","kind":"app","path":".","packageName":"outline","language":"TypeScript","frameworks":["Koa","React"],"platforms":["Docker","Heroku","Docker Compose"],"env":["DATABASE_HOST","DATABASE_NAME","DATABASE_PASSWORD","DATABASE_PORT","DATABASE_URL","DATABASE_USER","DD_ENV","DEBUG","HEROKU_DYNO_ID","HTTPS_PROXY","INSTANCE_ID","NODE_ENV","NODE_OPTIONS","URL"],"evidence":[{"file":"plugins/azure/server/auth/azure.ts","line":4,"why":"import","text":"import type { Request } from \"koa\";"},{"file":"app/components/Portal.tsx","line":2,"why":"import","text":"import { createPortal } from \"react-dom\";"},{"file":"package.json","line":2,"why":"manifest","text":"\"name\": \"outline\","},{"file":"package.json","line":167,"why":"dependency","text":"\"koa\": \"^3.0.3\","},{"file":"package.json","line":224,"why":"dependency","text":"\"react-dom\": \"^19.3.0\","}],"evidenceCount":5},{"id":"tech:amazon-s3","techId":"amazon-s3","name":"Amazon S3","kind":"datastore","category":"storage","categoryLabel":"Object storage","column":"data","url":"https://aws.amazon.com/s3/","unit":false,"evidence":[{"file":"server/storage/files/S3Storage.ts","line":5,"why":"import","text":"import type * as AwsS3 from \"@aws-sdk/client-s3\";"},{"file":"server/storage/files/S3Storage.ts","line":166,"why":"import","text":"const { Upload } = await import(\"@aws-sdk/lib-storage\");"},{"file":"server/storage/files/BaseStorage.ts","line":4,"why":"import","text":"import type { PresignedPost } from \"@aws-sdk/s3-presigned-post\";"},{"file":"server/storage/files/S3Storage.ts","line":89,"why":"import","text":"const { getSignedUrl } = await import(\"@aws-sdk/s3-request-presigner\");"},{"file":"package.json","line":55,"why":"dependency","text":"\"@aws-sdk/client-s3\": \"^3.1159.0\","},{"file":"package.json","line":57,"why":"dependency","text":"\"@aws-sdk/lib-storage\": \"^3.1159.0\","}],"evidenceCount":8},{"id":"tech:postgresql","techId":"postgresql","name":"PostgreSQL","kind":"datastore","category":"database","categoryLabel":"Databases","column":"data","url":"https://www.postgresql.org","unit":false,"evidence":[{"file":".env.sample","line":60,"why":"postgres:// URL in env","text":"DATABASE_URL= …"},{"file":"docker-compose.yml","line":12,"why":"env var","text":"POSTGRES_USER: …"},{"file":"docker-compose.yml","line":13,"why":"env var","text":"POSTGRES_PASSWORD: …"},{"file":"docker-compose.yml","line":14,"why":"env var","text":"POSTGRES_DB: …"},{"file":"server/config/database.js","line":2,"why":"reads env var","text":"use_env_variable: process.env.DATABASE_URL ? \"DATABASE_URL\" : undefined,"},{"file":"package.json","line":196,"why":"dependency","text":"\"pg\": \"^8.23.0\","}],"evidenceCount":7},{"id":"tech:redis","techId":"redis","name":"Redis","kind":"datastore","category":"cache","categoryLabel":"Caches","column":"data","url":"https://redis.io","unit":false,"evidence":[{"file":"server/emails/templates/BaseEmail.tsx","line":3,"why":"import","text":"import type Bull from \"bull\";"},{"file":"server/storage/redis.ts","line":2,"why":"import","text":"import type { RedisOptions } from \"ioredis\";"},{"file":".env.sample","line":80,"why":"env var","text":"REDIS_URL= …"},{"file":".env.sample","line":85,"why":"env var","text":"REDIS_COLLABORATION_URL= …"},{"file":"package.json","line":120,"why":"dependency","text":"\"bull\": \"^4.16.5\","},{"file":"package.json","line":157,"why":"dependency","text":"\"ioredis\": \"^5.11.1\","}],"evidenceCount":7},{"id":"tech:aws","techId":"aws","name":"AWS","kind":"external","category":"cloud","categoryLabel":"Cloud APIs","column":"external","url":"https://aws.amazon.com","unit":false,"evidence":[{"file":"server/storage/files/S3Storage.ts","line":218,"why":"import","text":"await import(\"@aws-sdk/cloudfront-signer\");"},{"file":"server/storage/files/S3Storage.ts","line":373,"why":"import","text":"await import(\"@aws-sdk/signature-v4-crt\");"},{"file":"package.json","line":56,"why":"dependency","text":"\"@aws-sdk/cloudfront-signer\": \"^3.1157.0\","},{"file":"package.json","line":60,"why":"dependency","text":"\"@aws-sdk/signature-v4-crt\": \"^3.1159.0\","}],"evidenceCount":4},{"id":"tech:datadog","techId":"datadog","name":"Datadog","kind":"external","category":"observability","categoryLabel":"Monitoring & logs","column":"external","url":"https://www.datadoghq.com","unit":false,"evidence":[{"file":"server/logging/tracer.ts","line":3,"why":"import","text":"import type { Span, Tracer } from \"dd-trace\";"},{"file":"server/logging/Metrics.ts","line":10,"why":"reads env var","text":"globalTags: { env: process.env.DD_ENV ?? env.ENVIRONMENT },"},{"file":"package.json","line":130,"why":"dependency","text":"\"dd-trace\": \"^5.131.1\","}],"evidenceCount":3},{"id":"tech:discord","techId":"discord","name":"Discord API","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://discord.com/developers","unit":false,"evidence":[{"file":"plugins/discord/server/auth/discord.ts","line":59,"why":"calls API host","text":"\"https://discord.com/api/oauth2/authorize?prompt=none\","},{"file":".env.sample","line":186,"why":"env var","text":"DISCORD_CLIENT_ID= …"},{"file":".env.sample","line":187,"why":"env var","text":"DISCORD_CLIENT_SECRET= …"},{"file":".env.sample","line":188,"why":"env var","text":"DISCORD_SERVER_ID= …"},{"file":".env.sample","line":189,"why":"env var","text":"DISCORD_SERVER_ROLES= …"}],"evidenceCount":5},{"id":"tech:dropbox","techId":"dropbox","name":"Dropbox","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://www.dropbox.com/developers","unit":false,"evidence":[{"file":"plugins/oidc/server/auth/oidcRouter.ts","line":91,"why":"calls API host","text":"\"https://api.dropboxapi.com/2/openid/userinfo\","},{"file":".env.sample","line":280,"why":"env var","text":"DROPBOX_APP_KEY= …"}],"evidenceCount":2},{"id":"tech:figma","techId":"figma","name":"Figma API","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://www.figma.com/developers/api","unit":false,"evidence":[{"file":"plugins/figma/server/figma.ts","line":207,"why":"calls API host","text":"return `https://api.figma.com/v1/files/${key}/meta`;"}],"evidenceCount":1},{"id":"tech:github","techId":"github","name":"GitHub API","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://docs.github.com/rest","unit":false,"evidence":[{"file":"plugins/github/server/github.ts","line":1,"why":"import","text":"import {"},{"file":"plugins/github/server/GitHubIssueProvider.ts","line":2,"why":"import","text":"import type { components } from \"@octokit/openapi-webhooks-types\";"},{"file":"plugins/github/server/github.ts","line":8,"why":"import","text":"import { Octokit, RequestError } from \"octokit\";"},{"file":".env.sample","line":251,"why":"env var","text":"GITHUB_CLIENT_ID= …"},{"file":".env.sample","line":252,"why":"env var","text":"GITHUB_CLIENT_SECRET= …"},{"file":".env.sample","line":253,"why":"env var","text":"GITHUB_WEBHOOK_SECRET= …"}],"evidenceCount":11},{"id":"tech:gitlab","techId":"gitlab","name":"GitLab API","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://docs.gitlab.com/api/","unit":false,"evidence":[{"file":"plugins/gitlab/server/gitlab.ts","line":1,"why":"import","text":"import { Gitlab } from \"@gitbeaker/rest\";"},{"file":"package.json","line":79,"why":"dependency","text":"\"@gitbeaker/rest\": \"^43.8.0\","}],"evidenceCount":2},{"id":"tech:google-analytics","techId":"google-analytics","name":"Google Analytics","kind":"external","category":"analytics","categoryLabel":"Analytics","column":"external","url":"https://marketingplatform.google.com/about/analytics/","unit":false,"evidence":[{"file":"app/components/Analytics.tsx","line":32,"why":"calls API host","text":"script.src = \"https://www.google-analytics.com/analytics.js\";"},{"file":"app/components/Analytics.tsx","line":78,"why":"calls API host","text":"script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementIds[0]}`;"}],"evidenceCount":2},{"id":"tech:google-apis","techId":"google-apis","name":"Google APIs (Workspace & more)","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://developers.google.com/apis-explorer","unit":false,"evidence":[{"file":"plugins/google/server/google.ts","line":9,"why":"calls API host","text":"userinfo: \"https://www.googleapis.com/oauth2/v3/userinfo\","}],"evidenceCount":1},{"id":"tech:google-identity","techId":"google-identity","name":"Google Sign-In","kind":"external","category":"auth","categoryLabel":"Auth","column":"external","url":"https://developers.google.com/identity","unit":false,"evidence":[{"file":"plugins/google/server/google.ts","line":7,"why":"calls API host","text":"authorize: \"https://accounts.google.com/o/oauth2/auth\","},{"file":".env.sample","line":175,"why":"env var","text":"GOOGLE_CLIENT_ID= …"},{"file":".env.sample","line":176,"why":"env var","text":"GOOGLE_CLIENT_SECRET= …"}],"evidenceCount":3},{"id":"tech:linear","techId":"linear","name":"Linear","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://linear.app/developers","unit":false,"evidence":[{"file":"plugins/linear/server/linear.ts","line":1,"why":"import","text":"import type { Issue, LinearClient, WorkflowState } from \"@linear/sdk\";"},{"file":"plugins/linear/shared/LinearUtils.ts","line":16,"why":"calls API host","text":"public static tokenUrl = \"https://api.linear.app/oauth/token\";"},{"file":"package.json","line":86,"why":"dependency","text":"\"@linear/sdk\": \"^97.2.0\","}],"evidenceCount":3},{"id":"tech:azure","techId":"azure","name":"Microsoft Azure","kind":"external","category":"cloud","categoryLabel":"Cloud APIs","column":"external","url":"https://azure.microsoft.com","unit":false,"evidence":[{"file":".env.sample","line":180,"why":"env var","text":"AZURE_CLIENT_ID= …"},{"file":".env.sample","line":181,"why":"env var","text":"AZURE_CLIENT_SECRET= …"}],"evidenceCount":2},{"id":"tech:microsoft-entra-id","techId":"microsoft-entra-id","name":"Microsoft Entra ID","kind":"external","category":"auth","categoryLabel":"Auth","column":"external","url":"https://www.microsoft.com/security/business/identity-access/microsoft-entra-id","unit":false,"evidence":[{"file":"plugins/azure/server/azure.ts","line":13,"why":"calls API host","text":"authorize: \"https://login.microsoftonline.com/common/oauth2/v2.0/authorize\","}],"evidenceCount":1},{"id":"tech:microsoft-graph","techId":"microsoft-graph","name":"Microsoft Graph","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://developer.microsoft.com/graph","unit":false,"evidence":[{"file":"plugins/azure/server/auth/azure.ts","line":49,"why":"calls API host","text":"\"https://graph.microsoft.com/v1.0/me/photo/$value\","}],"evidenceCount":1},{"id":"tech:notion","techId":"notion","name":"Notion API","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://developers.notion.com","unit":false,"evidence":[{"file":"plugins/notion/server/notion.ts","line":1,"why":"import","text":"import {"},{"file":"plugins/notion/shared/NotionUtils.ts","line":14,"why":"calls API host","text":"public static tokenUrl = \"https://api.notion.com/v1/oauth/token\";"},{"file":".env.sample","line":289,"why":"env var","text":"NOTION_CLIENT_ID= …"},{"file":".env.sample","line":290,"why":"env var","text":"NOTION_CLIENT_SECRET= …"},{"file":"package.json","line":90,"why":"dependency","text":"\"@notionhq/client\": \"^2.3.0\","}],"evidenceCount":5},{"id":"tech:sentry","techId":"sentry","name":"Sentry","kind":"external","category":"observability","categoryLabel":"Monitoring & logs","column":"external","url":"https://sentry.io","unit":false,"evidence":[{"file":"server/logging/sentry.ts","line":2,"why":"import","text":"import type * as SentryNode from \"@sentry/node\";"},{"file":"app/components/ProfiledRoute.ts","line":1,"why":"import","text":"import * as Sentry from \"@sentry/react\";"},{"file":".env.sample","line":284,"why":"env var","text":"SENTRY_DSN= …"},{"file":".env.sample","line":285,"why":"env var","text":"SENTRY_TUNNEL= …"},{"file":"package.json","line":110,"why":"dependency","text":"\"@sentry/node\": \"^10.78.0\","},{"file":"package.json","line":111,"why":"dependency","text":"\"@sentry/react\": \"^10.78.0\","}],"evidenceCount":6},{"id":"tech:slack","techId":"slack","name":"Slack API","kind":"external","category":"integrations","categoryLabel":"Integrations","column":"external","url":"https://api.slack.com","unit":false,"evidence":[{"file":"plugins/slack/server/api/hooks.ts","line":43,"why":"calls API host","text":"// https://api.slack.com/apis/connections/events-api"},{"file":"plugins/slack/server/slack.ts","line":8,"why":"calls API host","text":"const SLACK_API_URL = \"https://slack.com/api\";"},{"file":".env.sample","line":170,"why":"env var","text":"SLACK_CLIENT_ID= …"},{"file":".env.sample","line":171,"why":"env var","text":"SLACK_CLIENT_SECRET= …"},{"file":".env.sample","line":270,"why":"env var","text":"SLACK_VERIFICATION_TOKEN= …"},{"file":".env.sample","line":271,"why":"env var","text":"SLACK_APP_ID= …"}],"evidenceCount":7},{"id":"tech:smtp","techId":"smtp","name":"SMTP server","kind":"external","category":"email","categoryLabel":"Email","column":"external","url":"https://datatracker.ietf.org/doc/html/rfc5321","unit":false,"evidence":[{"file":"server/emails/mailer.tsx","line":1,"why":"import","text":"import type { MailboxAddress } from \"nodemailer/lib/addressparser\";"},{"file":".env.sample","line":219,"why":"env var","text":"SMTP_SERVICE= …"},{"file":".env.sample","line":220,"why":"env var","text":"SMTP_USERNAME= …"},{"file":".env.sample","line":221,"why":"env var","text":"SMTP_PASSWORD= …"},{"file":".env.sample","line":222,"why":"env var","text":"SMTP_FROM_EMAIL= …"},{"file":"package.json","line":186,"why":"dependency","text":"\"nodemailer\": \"^10.0.9\","}],"evidenceCount":6}],"edges":[{"id":"unit:.->tech:amazon-s3","from":"unit:.","to":"tech:amazon-s3","kind":"uses","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"server/storage/files/S3Storage.ts","line":5,"why":"import","text":"import type * as AwsS3 from \"@aws-sdk/client-s3\";"},{"file":"server/storage/files/S3Storage.ts","line":166,"why":"import","text":"const { Upload } = await import(\"@aws-sdk/lib-storage\");"},{"file":"server/storage/files/BaseStorage.ts","line":4,"why":"import","text":"import type { PresignedPost } from \"@aws-sdk/s3-presigned-post\";"},{"file":"server/storage/files/S3Storage.ts","line":89,"why":"import","text":"const { getSignedUrl } = await import(\"@aws-sdk/s3-request-presigner\");"},{"file":"package.json","line":55,"why":"dependency","text":"\"@aws-sdk/client-s3\": \"^3.1159.0\","},{"file":"package.json","line":57,"why":"dependency","text":"\"@aws-sdk/lib-storage\": \"^3.1159.0\","}],"evidenceCount":8},{"id":"unit:.->tech:aws","from":"unit:.","to":"tech:aws","kind":"uses","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"server/storage/files/S3Storage.ts","line":218,"why":"import","text":"await import(\"@aws-sdk/cloudfront-signer\");"},{"file":"server/storage/files/S3Storage.ts","line":373,"why":"import","text":"await import(\"@aws-sdk/signature-v4-crt\");"},{"file":"package.json","line":56,"why":"dependency","text":"\"@aws-sdk/cloudfront-signer\": \"^3.1157.0\","},{"file":"package.json","line":60,"why":"dependency","text":"\"@aws-sdk/signature-v4-crt\": \"^3.1159.0\","}],"evidenceCount":4},{"id":"unit:.->tech:azure","from":"unit:.","to":"tech:azure","kind":"uses","via":["$AZURE_CLIENT_ID","$AZURE_CLIENT_SECRET"],"confidence":"configured","declaredOnly":false,"evidence":[{"file":".env.sample","line":180,"why":"env var","text":"AZURE_CLIENT_ID= …"},{"file":".env.sample","line":181,"why":"env var","text":"AZURE_CLIENT_SECRET= …"}],"evidenceCount":2},{"id":"unit:.->tech:datadog","from":"unit:.","to":"tech:datadog","kind":"uses","via":["$DD_ENV"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"server/logging/tracer.ts","line":3,"why":"import","text":"import type { Span, Tracer } from \"dd-trace\";"},{"file":"server/logging/Metrics.ts","line":10,"why":"reads env var","text":"globalTags: { env: process.env.DD_ENV ?? env.ENVIRONMENT },"},{"file":"package.json","line":130,"why":"dependency","text":"\"dd-trace\": \"^5.131.1\","}],"evidenceCount":3},{"id":"unit:.->tech:discord","from":"unit:.","to":"tech:discord","kind":"uses","via":["$DISCORD_CLIENT_ID","$DISCORD_CLIENT_SECRET","$DISCORD_SERVER_ID","$DISCORD_SERVER_ROLES"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/discord/server/auth/discord.ts","line":59,"why":"calls API host","text":"\"https://discord.com/api/oauth2/authorize?prompt=none\","},{"file":".env.sample","line":186,"why":"env var","text":"DISCORD_CLIENT_ID= …"},{"file":".env.sample","line":187,"why":"env var","text":"DISCORD_CLIENT_SECRET= …"},{"file":".env.sample","line":188,"why":"env var","text":"DISCORD_SERVER_ID= …"},{"file":".env.sample","line":189,"why":"env var","text":"DISCORD_SERVER_ROLES= …"}],"evidenceCount":5},{"id":"unit:.->tech:dropbox","from":"unit:.","to":"tech:dropbox","kind":"uses","via":["$DROPBOX_APP_KEY"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/oidc/server/auth/oidcRouter.ts","line":91,"why":"calls API host","text":"\"https://api.dropboxapi.com/2/openid/userinfo\","},{"file":".env.sample","line":280,"why":"env var","text":"DROPBOX_APP_KEY= …"}],"evidenceCount":2},{"id":"unit:.->tech:figma","from":"unit:.","to":"tech:figma","kind":"calls","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/figma/server/figma.ts","line":207,"why":"calls API host","text":"return `https://api.figma.com/v1/files/${key}/meta`;"}],"evidenceCount":1},{"id":"unit:.->tech:github","from":"unit:.","to":"tech:github","kind":"uses","via":["$GITHUB_CLIENT_ID","$GITHUB_CLIENT_SECRET","$GITHUB_WEBHOOK_SECRET","$GITHUB_APP_ID","$GITHUB_APP_PRIVATE_KEY"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/github/server/github.ts","line":1,"why":"import","text":"import {"},{"file":"plugins/github/server/GitHubIssueProvider.ts","line":2,"why":"import","text":"import type { components } from \"@octokit/openapi-webhooks-types\";"},{"file":"plugins/github/server/github.ts","line":8,"why":"import","text":"import { Octokit, RequestError } from \"octokit\";"},{"file":".env.sample","line":251,"why":"env var","text":"GITHUB_CLIENT_ID= …"},{"file":".env.sample","line":252,"why":"env var","text":"GITHUB_CLIENT_SECRET= …"},{"file":".env.sample","line":253,"why":"env var","text":"GITHUB_WEBHOOK_SECRET= …"}],"evidenceCount":11},{"id":"unit:.->tech:gitlab","from":"unit:.","to":"tech:gitlab","kind":"uses","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/gitlab/server/gitlab.ts","line":1,"why":"import","text":"import { Gitlab } from \"@gitbeaker/rest\";"},{"file":"package.json","line":79,"why":"dependency","text":"\"@gitbeaker/rest\": \"^43.8.0\","}],"evidenceCount":2},{"id":"unit:.->tech:google-analytics","from":"unit:.","to":"tech:google-analytics","kind":"calls","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"app/components/Analytics.tsx","line":32,"why":"calls API host","text":"script.src = \"https://www.google-analytics.com/analytics.js\";"},{"file":"app/components/Analytics.tsx","line":78,"why":"calls API host","text":"script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementIds[0]}`;"}],"evidenceCount":2},{"id":"unit:.->tech:google-apis","from":"unit:.","to":"tech:google-apis","kind":"calls","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/google/server/google.ts","line":9,"why":"calls API host","text":"userinfo: \"https://www.googleapis.com/oauth2/v3/userinfo\","}],"evidenceCount":1},{"id":"unit:.->tech:google-identity","from":"unit:.","to":"tech:google-identity","kind":"uses","via":["$GOOGLE_CLIENT_ID","$GOOGLE_CLIENT_SECRET"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/google/server/google.ts","line":7,"why":"calls API host","text":"authorize: \"https://accounts.google.com/o/oauth2/auth\","},{"file":".env.sample","line":175,"why":"env var","text":"GOOGLE_CLIENT_ID= …"},{"file":".env.sample","line":176,"why":"env var","text":"GOOGLE_CLIENT_SECRET= …"}],"evidenceCount":3},{"id":"unit:.->tech:linear","from":"unit:.","to":"tech:linear","kind":"uses","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/linear/server/linear.ts","line":1,"why":"import","text":"import type { Issue, LinearClient, WorkflowState } from \"@linear/sdk\";"},{"file":"plugins/linear/shared/LinearUtils.ts","line":16,"why":"calls API host","text":"public static tokenUrl = \"https://api.linear.app/oauth/token\";"},{"file":"package.json","line":86,"why":"dependency","text":"\"@linear/sdk\": \"^97.2.0\","}],"evidenceCount":3},{"id":"unit:.->tech:microsoft-entra-id","from":"unit:.","to":"tech:microsoft-entra-id","kind":"calls","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/azure/server/azure.ts","line":13,"why":"calls API host","text":"authorize: \"https://login.microsoftonline.com/common/oauth2/v2.0/authorize\","}],"evidenceCount":1},{"id":"unit:.->tech:microsoft-graph","from":"unit:.","to":"tech:microsoft-graph","kind":"calls","via":[],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/azure/server/auth/azure.ts","line":49,"why":"calls API host","text":"\"https://graph.microsoft.com/v1.0/me/photo/$value\","}],"evidenceCount":1},{"id":"unit:.->tech:notion","from":"unit:.","to":"tech:notion","kind":"uses","via":["$NOTION_CLIENT_ID","$NOTION_CLIENT_SECRET"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/notion/server/notion.ts","line":1,"why":"import","text":"import {"},{"file":"plugins/notion/shared/NotionUtils.ts","line":14,"why":"calls API host","text":"public static tokenUrl = \"https://api.notion.com/v1/oauth/token\";"},{"file":".env.sample","line":289,"why":"env var","text":"NOTION_CLIENT_ID= …"},{"file":".env.sample","line":290,"why":"env var","text":"NOTION_CLIENT_SECRET= …"},{"file":"package.json","line":90,"why":"dependency","text":"\"@notionhq/client\": \"^2.3.0\","}],"evidenceCount":5},{"id":"unit:.->tech:postgresql","from":"unit:.","to":"tech:postgresql","kind":"uses","via":["$DATABASE_URL","Sequelize"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/gitea/server/api/gitea.ts","line":2,"why":"import","text":"import { Op } from \"sequelize\";"},{"file":"server/models/AccessRequest.ts","line":6,"why":"import","text":"import {"},{"file":".env.sample","line":60,"why":"postgres:// URL in env","text":"DATABASE_URL= …"},{"file":"server/config/database.js","line":2,"why":"reads env var","text":"use_env_variable: process.env.DATABASE_URL ? \"DATABASE_URL\" : undefined,"},{"file":"package.json","line":196,"why":"dependency","text":"\"pg\": \"^8.23.0\","},{"file":"package.json","line":241,"why":"dependency","text":"\"sequelize\": \"^6.37.8\","}],"evidenceCount":7},{"id":"unit:.->tech:redis","from":"unit:.","to":"tech:redis","kind":"uses","via":["Bull","$REDIS_URL","$REDIS_COLLABORATION_URL"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"server/emails/templates/BaseEmail.tsx","line":3,"why":"import","text":"import type Bull from \"bull\";"},{"file":"server/storage/redis.ts","line":2,"why":"import","text":"import type { RedisOptions } from \"ioredis\";"},{"file":".env.sample","line":80,"why":"env var","text":"REDIS_URL= …"},{"file":".env.sample","line":85,"why":"env var","text":"REDIS_COLLABORATION_URL= …"},{"file":"package.json","line":120,"why":"dependency","text":"\"bull\": \"^4.16.5\","},{"file":"package.json","line":157,"why":"dependency","text":"\"ioredis\": \"^5.11.1\","}],"evidenceCount":6},{"id":"unit:.->tech:sentry","from":"unit:.","to":"tech:sentry","kind":"uses","via":["$SENTRY_DSN","$SENTRY_TUNNEL"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"server/logging/sentry.ts","line":2,"why":"import","text":"import type * as SentryNode from \"@sentry/node\";"},{"file":"app/components/ProfiledRoute.ts","line":1,"why":"import","text":"import * as Sentry from \"@sentry/react\";"},{"file":".env.sample","line":284,"why":"env var","text":"SENTRY_DSN= …"},{"file":".env.sample","line":285,"why":"env var","text":"SENTRY_TUNNEL= …"},{"file":"package.json","line":110,"why":"dependency","text":"\"@sentry/node\": \"^10.78.0\","},{"file":"package.json","line":111,"why":"dependency","text":"\"@sentry/react\": \"^10.78.0\","}],"evidenceCount":6},{"id":"unit:.->tech:slack","from":"unit:.","to":"tech:slack","kind":"uses","via":["$SLACK_CLIENT_ID","$SLACK_CLIENT_SECRET","$SLACK_VERIFICATION_TOKEN","$SLACK_APP_ID","$SLACK_MESSAGE_ACTIONS"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"plugins/slack/server/api/hooks.ts","line":43,"why":"calls API host","text":"// https://api.slack.com/apis/connections/events-api"},{"file":"plugins/slack/server/slack.ts","line":8,"why":"calls API host","text":"const SLACK_API_URL = \"https://slack.com/api\";"},{"file":".env.sample","line":170,"why":"env var","text":"SLACK_CLIENT_ID= …"},{"file":".env.sample","line":171,"why":"env var","text":"SLACK_CLIENT_SECRET= …"},{"file":".env.sample","line":270,"why":"env var","text":"SLACK_VERIFICATION_TOKEN= …"},{"file":".env.sample","line":271,"why":"env var","text":"SLACK_APP_ID= …"}],"evidenceCount":7},{"id":"unit:.->tech:smtp","from":"unit:.","to":"tech:smtp","kind":"uses","via":["$SMTP_SERVICE","$SMTP_USERNAME","$SMTP_PASSWORD","$SMTP_FROM_EMAIL"],"confidence":"imported","declaredOnly":false,"evidence":[{"file":"server/emails/mailer.tsx","line":1,"why":"import","text":"import type { MailboxAddress } from \"nodemailer/lib/addressparser\";"},{"file":".env.sample","line":219,"why":"env var","text":"SMTP_SERVICE= …"},{"file":".env.sample","line":220,"why":"env var","text":"SMTP_USERNAME= …"},{"file":".env.sample","line":221,"why":"env var","text":"SMTP_PASSWORD= …"},{"file":".env.sample","line":222,"why":"env var","text":"SMTP_FROM_EMAIL= …"},{"file":"package.json","line":186,"why":"dependency","text":"\"nodemailer\": \"^10.0.9\","}],"evidenceCount":6}],"warnings":[]},"mermaid":{"services":"flowchart LR\n  subgraph apps[\"Apps\"]\n    direction TB\n    n_outline(\"outline\u003cbr/>\u003csmall>Koa · React\u003c/small>\")\n  end\n  subgraph data[\"Data\"]\n    direction TB\n    n_amazon_s3[(\"Amazon S3\")]\n    n_postgresql[(\"PostgreSQL\")]\n    n_redis[(\"Redis\")]\n  end\n  subgraph external[\"Third-party\"]\n    direction TB\n    n_cloud_api_2_aws_microsoft_azure[[\"Cloud API ×2: AWS, Microsoft Azure\"]]\n    n_monitoring_2_datadog_sentry[[\"Monitoring ×2: Datadog, Sentry\"]]\n    n_integration_10_discord_api_dropb[[\"Integration ×10: Discord API, Dropbox, Figma API, GitHub API, …\"]]\n    n_google_analytics([\"Google Analytics\"])\n    n_auth_2_google_sign_in_microsoft_[[\"Auth ×2: Google Sign-In, Microsoft Entra ID\"]]\n    n_smtp_server([\"SMTP server\"])\n  end\n  n_outline --> n_amazon_s3\n  n_outline --> n_cloud_api_2_aws_microsoft_azure\n  n_outline --> n_monitoring_2_datadog_sentry\n  n_outline --> n_integration_10_discord_api_dropb\n  n_outline --> n_google_analytics\n  n_outline --> n_auth_2_google_sign_in_microsoft_\n  n_outline -->|\"Sequelize\"| n_postgresql\n  n_outline -->|\"Bull\"| n_redis\n  n_outline --> n_smtp_server\n  classDef app stroke:#2a78d6,stroke-width:2px\n  classDef service stroke:#eb6834,stroke-width:2px\n  classDef data stroke:#1baf7a,stroke-width:2px\n  classDef worker stroke:#eda100,stroke-width:2px\n  classDef external stroke:#e87ba4,stroke-width:2px\n  classDef neutral stroke:#898781,stroke-width:2px\n  classDef added stroke:#0ca30c,stroke-width:3px\n  classDef removed stroke:#d03b3b,stroke-width:3px,stroke-dasharray:6 4\n  class n_outline app\n  class n_amazon_s3,n_postgresql,n_redis data\n  class n_cloud_api_2_aws_microsoft_azure,n_monitoring_2_datadog_sentry,n_integration_10_discord_api_dropb,n_google_analytics,n_auth_2_google_sign_in_microsoft_,n_smtp_server external","everything":"flowchart LR\n  subgraph apps[\"Apps\"]\n    direction TB\n    n_outline(\"outline\u003cbr/>\u003csmall>Koa · React\u003c/small>\")\n  end\n  subgraph data[\"Data\"]\n    direction TB\n    n_amazon_s3[(\"Amazon S3\")]\n    n_postgresql[(\"PostgreSQL\")]\n    n_redis[(\"Redis\")]\n  end\n  subgraph external[\"Third-party\"]\n    direction TB\n    n_cloud_api_2_aws_microsoft_azure[[\"Cloud API ×2: AWS, Microsoft Azure\"]]\n    n_monitoring_2_datadog_sentry[[\"Monitoring ×2: Datadog, Sentry\"]]\n    n_integration_10_discord_api_dropb[[\"Integration ×10: Discord API, Dropbox, Figma API, GitHub API, …\"]]\n    n_google_analytics([\"Google Analytics\"])\n    n_auth_2_google_sign_in_microsoft_[[\"Auth ×2: Google Sign-In, Microsoft Entra ID\"]]\n    n_smtp_server([\"SMTP server\"])\n  end\n  n_outline --> n_amazon_s3\n  n_outline --> n_cloud_api_2_aws_microsoft_azure\n  n_outline --> n_monitoring_2_datadog_sentry\n  n_outline --> n_integration_10_discord_api_dropb\n  n_outline --> n_google_analytics\n  n_outline --> n_auth_2_google_sign_in_microsoft_\n  n_outline -->|\"Sequelize\"| n_postgresql\n  n_outline -->|\"Bull\"| n_redis\n  n_outline --> n_smtp_server\n  classDef app stroke:#2a78d6,stroke-width:2px\n  classDef service stroke:#eb6834,stroke-width:2px\n  classDef data stroke:#1baf7a,stroke-width:2px\n  classDef worker stroke:#eda100,stroke-width:2px\n  classDef external stroke:#e87ba4,stroke-width:2px\n  classDef neutral stroke:#898781,stroke-width:2px\n  classDef added stroke:#0ca30c,stroke-width:3px\n  classDef removed stroke:#d03b3b,stroke-width:3px,stroke-dasharray:6 4\n  class n_outline app\n  class n_amazon_s3,n_postgresql,n_redis data\n  class n_cloud_api_2_aws_microsoft_azure,n_monitoring_2_datadog_sentry,n_integration_10_discord_api_dropb,n_google_analytics,n_auth_2_google_sign_in_microsoft_,n_smtp_server external"}}</script>
+<script>
+// Colours. One hue per node family, taken in fixed order from a palette validated for
+// colour-vision deficiency in both modes. Text always uses ink tokens, never a family colour;
+// every node is labelled, so colour is never the only cue.
+
+const FAMILIES = [
+  { key: 'app', label: 'Apps' },
+  { key: 'service', label: 'Services' },
+  { key: 'data', label: 'Data' },
+  { key: 'worker', label: 'Workers' },
+  { key: 'external', label: 'Third-party' },
+  { key: 'neutral', label: 'Libraries & tools' },
+];
+
+const THEMES = {
+  light: {
+    page: '#f9f9f7',
+    surface: '#fcfcfb',
+    card: '#ffffff',
+    ink: '#0b0b0b',
+    ink2: '#52514e',
+    muted: '#6f6d68',
+    hairline: '#e1e0d9',
+    axis: '#c3c2b7',
+    border: 'rgba(11,11,11,0.12)',
+    edge: '#9b998f',
+    edgeHi: '#2a2a28',
+    app: '#2a78d6',
+    service: '#eb6834',
+    data: '#1baf7a',
+    worker: '#eda100',
+    external: '#e87ba4',
+    neutral: '#898781',
+  },
+  dark: {
+    page: '#0d0d0d',
+    surface: '#1a1a19',
+    card: '#232322',
+    ink: '#f0efec',
+    ink2: '#c3c2b7',
+    muted: '#a3a199',
+    hairline: '#2c2c2a',
+    axis: '#383835',
+    border: 'rgba(255,255,255,0.12)',
+    edge: '#6b6a64',
+    edgeHi: '#f0efec',
+    app: '#3987e5',
+    service: '#d95926',
+    data: '#199e70',
+    worker: '#c98500',
+    external: '#d55181',
+    neutral: '#898781',
+  },
+};
+
+function familyOf(node) {
+  switch (node.kind) {
+    case 'app':
+    case 'mobile':
+    case 'desktop':
+      return 'app';
+    case 'service':
+    case 'container':
+    case 'function':
+      return 'service';
+    case 'worker':
+      return 'worker';
+    case 'library':
+    case 'cli':
+      return 'neutral';
+    case 'datastore':
+      return 'data';
+    case 'external':
+      return node.column === 'data' ? 'data' : 'external';
+    default:
+      return node.column === 'data' ? 'data' : node.column === 'external' ? 'external' : 'service';
+  }
+}
+
+/** CSS custom properties for both themes, scoped to `scope`. */
+function themeCss(scope, mode) {
+  const vars = (t) => Object.entries(t).map(([k, v]) => `--sm-${k}:${v};`).join('');
+  if (mode === 'light' || mode === 'dark') return `${scope}{${vars(THEMES[mode])}}`;
+  return (
+    `${scope}{${vars(THEMES.light)}}` +
+    `@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) ${scope}{${vars(THEMES.dark)}}}` +
+    `:root[data-theme="dark"] ${scope}{${vars(THEMES.dark)}}`
+  );
+}
+
+// 24x24 stroke icons (original, generic; no brand marks). Drawn with stroke="currentColor".
+
+const ICONS = {
+  app: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>',
+  mobile: '<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/>',
+  desktop: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M9 20h6M12 16v4"/>',
+  service: '<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/>',
+  container: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/>',
+  function: '<path d="M14 4h-1.5A2.5 2.5 0 0 0 10 6.5V20M7 11h6"/><path d="M16 14l4 4M20 14l-4 4"/>',
+  worker: '<circle cx="12" cy="12" r="8"/><path d="M12 7v5l3.5 2"/>',
+  cli: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/>',
+  library: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H19v14H5.5A1.5 1.5 0 0 0 4 19.5v-14z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/>',
+  database: '<ellipse cx="12" cy="5.5" rx="7.5" ry="2.5"/><path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5"/>',
+  cache: '<path d="M13 2.5L5 13.5h6l-1 8 8-11h-6l1-8z"/>',
+  queue: '<path d="M4 6h12M4 12h12M4 18h12"/><path d="M18 9l3 3-3 3"/>',
+  storage: '<path d="M4 7l1.5 12.5A2 2 0 0 0 7.5 21h9a2 2 0 0 0 2-1.5L20 7"/><ellipse cx="12" cy="7" rx="8" ry="3"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
+  vector: '<circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/><circle cx="12" cy="6" r="2"/><path d="M7.5 15.5L11 7.8M16.5 15.5L13 7.8M8 17h8"/>',
+  auth: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2.5"/>',
+  payments: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
+  email: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/>',
+  messaging: '<path d="M4 5.5h16v10H9l-5 4v-14z"/><path d="M8 10h8"/>',
+  ai: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z"/>',
+  observability: '<path d="M3 12h4l2.5-6 4 12 2.5-6h5"/>',
+  analytics: '<path d="M5 20V12M10 20V6M15 20v-9M20 20V4"/>',
+  cms: '<path d="M7 3h7l4 4v14H7V3z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>',
+  flags: '<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  realtime: '<circle cx="12" cy="12" r="2"/><path d="M8 8a5.5 5.5 0 0 0 0 8M16 8a5.5 5.5 0 0 1 0 8M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"/>',
+  workflow: '<rect x="3" y="4" width="6" height="5" rx="1"/><rect x="15" y="15" width="6" height="5" rx="1"/><path d="M6 9v4a2 2 0 0 0 2 2h7"/><path d="M13 13l2 2-2 2"/>',
+  cloud: '<path d="M7 18.5h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.6 4.5 4.5 0 0 0 7 18.5z"/>',
+  integrations: '<path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7zM12 16v5"/>',
+  external: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+};
+
+function iconFor(node) {
+  if (node.kind === 'datastore' || node.kind === 'external') return ICONS[node.category] ?? ICONS.external;
+  return ICONS[node.kind] ?? ICONS.service;
+}
+
+// Turns the full graph into what gets drawn. Shared by Node renderers and the browser viewer,
+// so it must stay free of imports and Node APIs.
+//
+// "Services" view (default): internal libraries that other units depend on are folded into
+// the apps and services that use them. If apps/web depends on packages/db, and packages/db
+// uses PostgreSQL, the map draws web -> PostgreSQL "through db". Nothing is lost: the edge
+// keeps the original evidence.
+
+function viewGraph(graph, opts) {
+  const options = opts || {};
+  const showLibraries = Boolean(options.libraries);
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+  const dependents = new Map();
+  for (const e of graph.edges) {
+    if (e.kind === 'depends' && byId.get(e.to) && byId.get(e.to).kind === 'library') {
+      dependents.set(e.to, (dependents.get(e.to) || 0) + 1);
+    }
+  }
+  const hidden = new Set();
+  if (!showLibraries) {
+    const touched = new Set();
+    for (const e of graph.edges) {
+      touched.add(e.from);
+      touched.add(e.to);
+    }
+    // Fold used libraries into their users; drop unconnected ones from this view.
+    for (const n of graph.nodes) if (n.kind === 'library' && (dependents.get(n.id) || !touched.has(n.id))) hidden.add(n.id);
+  }
+  // Copy edges (and their arrays) so folding never writes back into the graph.
+  const copy = (e) => Object.assign({}, e, { via: e.via.slice(), evidence: e.evidence.slice(), through: e.through ? e.through.slice() : undefined });
+  if (hidden.size === 0) return { nodes: graph.nodes.slice(), edges: graph.edges.map(copy), hidden: 0 };
+
+  const out = new Map();
+  for (const e of graph.edges) {
+    if (!out.has(e.from)) out.set(e.from, []);
+    out.get(e.from).push(e);
+  }
+  const edges = new Map();
+  for (const e of graph.edges) if (!hidden.has(e.from) && !hidden.has(e.to)) edges.set(e.id, copy(e));
+
+  const rank = { inferred: 1, declared: 2, configured: 3, imported: 4 };
+  for (const n of graph.nodes) {
+    if (hidden.has(n.id)) continue;
+    // Breadth-first through hidden libraries reachable from this visible node.
+    // `entry` is the evidence for the first hop (this node -> the library it imports):
+    // the line to change if the lifted connection is unwanted.
+    const seen = new Set();
+    const queue = [];
+    for (const e of out.get(n.id) || []) if (e.kind === 'depends' && hidden.has(e.to) && !seen.has(e.to)) {
+      seen.add(e.to);
+      queue.push([e.to, e.evidence.slice(0, 2)]);
+    }
+    while (queue.length) {
+      const item = queue.shift();
+      const lib = item[0];
+      const entry = item[1];
+      const libName = byId.get(lib).name;
+      for (const e of out.get(lib) || []) {
+        if (hidden.has(e.to)) {
+          if (e.kind === 'depends' && !seen.has(e.to)) {
+            seen.add(e.to);
+            queue.push([e.to, entry]);
+          }
+          continue;
+        }
+        if (e.to === n.id) continue;
+        // Lift connections to infrastructure and backends only. A shared package importing
+        // code from an app is a code-level detail, not an architectural connection.
+        const target = byId.get(e.to);
+        if (target && (target.column === 'apps' || target.column === 'libraries')) continue;
+        const id = n.id + '->' + e.to;
+        let lifted = edges.get(id);
+        if (!lifted) {
+          lifted = { id, from: n.id, to: e.to, kind: e.kind, via: e.via.slice(), through: [], confidence: e.confidence, declaredOnly: e.declaredOnly, evidence: e.evidence.slice(), evidenceCount: e.evidenceCount || e.evidence.length, lifted: true, entry };
+          edges.set(id, lifted);
+        } else {
+          if (!lifted.through) lifted.through = [];
+          if (rank[e.confidence] > rank[lifted.confidence]) lifted.confidence = e.confidence;
+          lifted.declaredOnly = lifted.declaredOnly && e.declaredOnly;
+          for (const v of e.via) if (lifted.via.indexOf(v) === -1) lifted.via.push(v);
+          if (lifted.evidence.length < 6) for (const ev of e.evidence) if (lifted.evidence.length < 6 && !lifted.evidence.some((x) => x.file === ev.file && x.line === ev.line)) lifted.evidence.push(ev);
+        }
+        if (lifted.through && lifted.through.indexOf(libName) === -1) lifted.through.push(libName);
+      }
+    }
+  }
+  return { nodes: graph.nodes.filter((n) => !hidden.has(n.id)), edges: Array.from(edges.values()), hidden: hidden.size };
+}
+
+/** Everything connected to `id` (one hop), for focus mode and `stackmap why`. */
+function neighbours(view, id) {
+  const ids = new Set([id]);
+  for (const e of view.edges) {
+    if (e.from === id) ids.add(e.to);
+    if (e.to === id) ids.add(e.from);
+  }
+  return ids;
+}
+
+/** Nodes that (transitively) depend on `id`: what breaks if it goes down. */
+function impactOf(graph, id) {
+  const incoming = new Map();
+  for (const e of graph.edges) {
+    if (!incoming.has(e.to)) incoming.set(e.to, []);
+    incoming.get(e.to).push(e);
+  }
+  const seen = new Map();
+  const queue = [[id, 0]];
+  while (queue.length) {
+    const [cur, depth] = queue.shift();
+    for (const e of incoming.get(cur) || []) {
+      if (seen.has(e.from) || e.from === id) continue;
+      seen.set(e.from, { depth: depth + 1, via: cur, edge: e });
+      queue.push([e.from, depth + 1]);
+    }
+  }
+  return seen;
+}
+
+// Column layout for the map: Apps | Services & workers | Libraries | Data | Third-party.
+// Order inside columns uses the barycenter heuristic to reduce edge crossings; data and
+// third-party nodes are grouped by category. Shared by the SVG renderer and the browser viewer,
+// so it must stay free of imports and Node APIs.
+
+const LAYOUT = { nodeW: 216, nodeH: 54, gapY: 12, colGap: 150, subColGap: 36, headerH: 24, groupGap: 16, pad: 40, titleH: 40 };
+
+const COLUMNS = [
+  { key: 'apps', title: 'Apps' },
+  { key: 'services', title: 'Services & workers' },
+  { key: 'libraries', title: 'Libraries' },
+  { key: 'data', title: 'Data' },
+  { key: 'external', title: 'Third-party' },
+];
+
+const SERVICE_KIND_ORDER = { service: 0, function: 1, container: 2, worker: 3, cli: 4 };
+
+function layoutGraph(view, opts) {
+  const L = Object.assign({}, LAYOUT, opts || {});
+  const colIndex = new Map(COLUMNS.map((c, i) => [c.key, i]));
+  const cols = new Map(COLUMNS.map((c) => [c.key, []]));
+  for (const n of view.nodes) (cols.get(n.column) || cols.get('services')).push(n);
+
+  // Adjacency (undirected) for barycenters.
+  const adj = new Map(view.nodes.map((n) => [n.id, []]));
+  for (const e of view.edges) {
+    if (adj.has(e.from) && adj.has(e.to)) {
+      adj.get(e.from).push(e.to);
+      adj.get(e.to).push(e.from);
+    }
+  }
+  const colOf = new Map();
+  for (const [k, list] of cols) for (const n of list) colOf.set(n.id, k);
+
+  // Initial order.
+  cols.get('apps').sort(byName);
+  cols.get('services').sort((a, b) => (SERVICE_KIND_ORDER[a.kind] || 9) - (SERVICE_KIND_ORDER[b.kind] || 9) || byName(a, b));
+  cols.get('libraries').sort(byName);
+  for (const k of ['data', 'external']) cols.get(k).sort((a, b) => String(a.category).localeCompare(String(b.category)) || byName(a, b));
+
+  const pos = new Map();
+  const refreshPos = () => {
+    for (const [, list] of cols) list.forEach((n, i) => pos.set(n.id, list.length > 1 ? i / (list.length - 1) : 0.5));
+  };
+  refreshPos();
+  const bary = (n) => {
+    const ns = adj.get(n.id).filter((id) => colOf.get(id) !== colOf.get(n.id));
+    if (!ns.length) return pos.get(n.id);
+    return ns.reduce((s, id) => s + pos.get(id), 0) / ns.length;
+  };
+  const order = ['apps', 'services', 'libraries', 'data', 'external'];
+  for (let iter = 0; iter < 8; iter++) {
+    const seq = iter % 2 === 0 ? order : order.slice().reverse();
+    for (const k of seq) {
+      const list = cols.get(k);
+      if (list.length < 2) continue;
+      const b = new Map(list.map((n) => [n.id, bary(n)]));
+      if (k === 'data' || k === 'external') {
+        const groups = new Map();
+        for (const n of list) {
+          const g = n.category || 'other';
+          if (!groups.has(g)) groups.set(g, []);
+          groups.get(g).push(n);
+        }
+        const gs = Array.from(groups.values()).map((members) => {
+          members.sort((x, y) => b.get(x.id) - b.get(y.id) || byName(x, y));
+          return { members, score: members.reduce((s, n) => s + b.get(n.id), 0) / members.length };
+        });
+        gs.sort((x, y) => x.score - y.score || String(x.members[0].category).localeCompare(String(y.members[0].category)));
+        cols.set(k, gs.flatMap((g) => g.members));
+      } else {
+        list.sort((x, y) => b.get(x.id) - b.get(y.id) || byName(x, y));
+      }
+      refreshPos();
+    }
+  }
+
+  // Wrap long columns into sub-columns.
+  const total = view.nodes.length;
+  const maxRows = Math.max(12, Math.min(20, Math.ceil(Math.sqrt(total) * 1.7)));
+  const rowH = L.nodeH + L.gapY;
+  const boxes = new Map();
+  const groups = [];
+  const columns = [];
+  let x = L.pad;
+  const colHeights = [];
+
+  for (const c of COLUMNS) {
+    const list = cols.get(c.key);
+    if (!list.length) continue;
+    const grouped = c.key === 'data' || c.key === 'external';
+    // Build rows: each item is a node or a group header.
+    const items = [];
+    let prevCat = null;
+    for (const n of list) {
+      if (grouped && n.category !== prevCat) {
+        items.push({ header: n.categoryLabel || n.category || 'Other', category: n.category });
+        prevCat = n.category;
+      }
+      items.push({ node: n });
+    }
+    const heightOf = (it) => (it.header ? L.headerH + (L.groupGap / 2) : rowH);
+    const maxH = maxRows * rowH;
+    const sub = [[]];
+    let h = 0;
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
+      const ih = heightOf(it);
+      // Keep a header with at least one node.
+      const need = it.header ? ih + rowH : ih;
+      if (h + need > maxH && sub[sub.length - 1].length) {
+        sub.push([]);
+        h = 0;
+        if (!it.header && grouped) {
+          // Continue the group under a repeated header.
+          const lastHeader = findLastHeader(items, i);
+          if (lastHeader) {
+            sub[sub.length - 1].push({ header: lastHeader.header + ' (cont.)', category: lastHeader.category, cont: true });
+            h += heightOf(lastHeader);
+          }
+        }
+      }
+      sub[sub.length - 1].push(it);
+      h += ih;
+    }
+    const colX = x;
+    const colW = sub.length * L.nodeW + (sub.length - 1) * L.subColGap;
+    let colH = 0;
+    sub.forEach((items2, si) => {
+      let y = 0;
+      const sx = colX + si * (L.nodeW + L.subColGap);
+      for (const it of items2) {
+        if (it.header) {
+          if (y > 0) y += L.groupGap / 2;
+          groups.push({ label: it.header, category: it.category, x: sx, y, w: L.nodeW, column: c.key });
+          y += L.headerH;
+        } else {
+          boxes.set(it.node.id, { x: sx, y, w: L.nodeW, h: L.nodeH });
+          y += rowH;
+        }
+      }
+      colH = Math.max(colH, y - L.gapY);
+    });
+    columns.push({ key: c.key, title: c.title, x: colX, w: colW, h: colH, count: list.length });
+    colHeights.push(colH);
+    x += colW + L.colGap;
+  }
+
+  // Centre each column vertically under the title row.
+  const contentH = Math.max(L.nodeH, ...colHeights, 0);
+  const top = L.pad + L.titleH;
+  for (const col of columns) {
+    const dy = top + Math.round((contentH - col.h) / 2);
+    col.y = dy;
+    for (const [id, b] of boxes) if (colOf.get(id) === col.key) b.y += dy;
+    for (const g of groups) if (g.column === col.key && !g.shifted) {
+      g.y += dy;
+      g.shifted = true;
+    }
+  }
+  const width = Math.max(x - L.colGap + L.pad, 320);
+  const height = top + contentH + L.pad;
+
+  const edges = routeEdges(view.edges, boxes, colOf, colIndex);
+  return { width, height, boxes, groups, columns, edges, L };
+}
+
+function findLastHeader(items, i) {
+  for (let j = i - 1; j >= 0; j--) if (items[j].header) return items[j];
+  return null;
+}
+
+function byName(a, b) {
+  return String(a.name).localeCompare(String(b.name));
+}
+
+/** Bezier paths with ports spread along each node's sides, sorted to avoid crossings at the node. */
+function routeEdges(edges, boxes, colOf, colIndex) {
+  const geo = [];
+  for (const e of edges) {
+    const a = boxes.get(e.from);
+    const b = boxes.get(e.to);
+    if (!a || !b) continue;
+    let mode;
+    if (b.x > a.x + 1) mode = 'right';
+    else if (b.x < a.x - 1) mode = 'left';
+    else mode = 'loop';
+    geo.push({ e, a, b, mode });
+  }
+  const outPorts = new Map();
+  const inPorts = new Map();
+  const key = (id, side) => id + '|' + side;
+  for (const g of geo) {
+    const outSide = g.mode === 'left' ? 'L' : 'R';
+    const inSide = g.mode === 'right' ? 'L' : 'R';
+    push(outPorts, key(g.e.from, outSide), g);
+    push(inPorts, key(g.e.to, inSide), g);
+    g.outSide = outSide;
+    g.inSide = inSide;
+  }
+  const spread = (map, which) => {
+    for (const [, list] of map) {
+      list.sort((p, q) => (which === 'out' ? p.b.y - q.b.y || p.b.x - q.b.x : p.a.y - q.a.y || p.a.x - q.a.x));
+      const n = list.length;
+      list.forEach((g, i) => {
+        const box = which === 'out' ? g.a : g.b;
+        const margin = Math.min(14, box.h / 4);
+        const y = n === 1 ? box.y + box.h / 2 : box.y + margin + ((box.h - 2 * margin) * i) / (n - 1);
+        if (which === 'out') g.sy = y;
+        else g.ty = y;
+      });
+    }
+  };
+  spread(outPorts, 'out');
+  spread(inPorts, 'in');
+  const out = [];
+  for (const g of geo) {
+    const sx = g.outSide === 'R' ? g.a.x + g.a.w : g.a.x;
+    const tx = g.inSide === 'L' ? g.b.x : g.b.x + g.b.w;
+    const sy = g.sy;
+    const ty = g.ty;
+    let d;
+    if (g.mode === 'loop') {
+      const bulge = 46 + Math.min(80, Math.abs(ty - sy) * 0.15);
+      d = 'M' + r(sx) + ' ' + r(sy) + ' C' + r(sx + bulge) + ' ' + r(sy) + ' ' + r(tx + bulge) + ' ' + r(ty) + ' ' + r(tx) + ' ' + r(ty);
+    } else {
+      const dir = g.mode === 'right' ? 1 : -1;
+      const dx = Math.max(40, Math.abs(tx - sx) / 2);
+      d = 'M' + r(sx) + ' ' + r(sy) + ' C' + r(sx + dir * dx) + ' ' + r(sy) + ' ' + r(tx - dir * dx) + ' ' + r(ty) + ' ' + r(tx) + ' ' + r(ty);
+    }
+    out.push({ id: g.e.id, from: g.e.from, to: g.e.to, d, sx, sy, tx, ty, mx: (sx + tx) / 2, my: (sy + ty) / 2, mode: g.mode });
+  }
+  return out;
+}
+
+function push(map, k, v) {
+  if (!map.has(k)) map.set(k, []);
+  map.get(k).push(v);
+}
+
+function r(n) {
+  return Math.round(n * 10) / 10;
+}
+
+// Draws a laid-out view as SVG markup. Used for `--format svg` and, in the browser, by the
+// interactive viewer (which then adds pan, zoom and selection on top of the same markup).
+
+
+
+const KIND_LABELS = {
+  app: 'App', mobile: 'Mobile app', desktop: 'Desktop app', service: 'Service', container: 'Container',
+  function: 'Function', worker: 'Worker', cli: 'CLI', library: 'Library', datastore: 'Data store', external: 'Third-party API',
+};
+
+const CATEGORY_SINGULAR = {
+  database: 'Database', cache: 'Cache', queue: 'Queue / stream', storage: 'Object storage', search: 'Search', vector: 'Vector database',
+  auth: 'Auth', payments: 'Payments', email: 'Email', messaging: 'Messaging', ai: 'AI', observability: 'Monitoring',
+  analytics: 'Analytics', cms: 'CMS', flags: 'Feature flags', realtime: 'Realtime', workflow: 'Jobs & workflows',
+  cloud: 'Cloud API', integrations: 'Integration',
+};
+
+const FONT = "system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+
+function subtitleOf(node) {
+  if (node.unit) {
+    const fw = (node.frameworks || []).slice(0, 2).join(' · ');
+    return fw || [KIND_LABELS[node.kind], node.language].filter(Boolean).join(' · ');
+  }
+  if (node.container) return node.image || (node.frameworks || [])[0] || 'Container';
+  if (node.custom) return node.description || CATEGORY_SINGULAR[node.category] || KIND_LABELS[node.kind] || '';
+  return CATEGORY_SINGULAR[node.category] || KIND_LABELS[node.kind] || '';
+}
+
+function escapeXml(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function fit(text, px, charW) {
+  const max = Math.max(4, Math.floor(px / charW));
+  const s = String(text || '');
+  return s.length > max ? s.slice(0, max - 1) + '…' : s;
+}
+
+/** CSS used by the map. `mode`: 'auto' (follows OS), 'light', 'dark', or 'external' (variables come from the page). */
+function mapCss(mode) {
+  const vars = (t) => Object.entries(t).map(([k, v]) => '--sm-' + k + ':' + v + ';').join('');
+  let css = '';
+  if (mode === 'light' || mode === 'dark') css += '.sm-map{' + vars(THEMES[mode]) + '}';
+  else if (mode !== 'external') css += '.sm-map{' + vars(THEMES.light) + '}@media (prefers-color-scheme:dark){.sm-map{' + vars(THEMES.dark) + '}}';
+  css +=
+    '.sm-map{font-family:' + FONT + '}' +
+    '.sm-bg{fill:var(--sm-surface)}' +
+    '.sm-col-title{fill:var(--sm-muted);font-size:11px;font-weight:650;letter-spacing:.08em}' +
+    '.sm-group{fill:var(--sm-muted);font-size:10.5px;font-weight:600;letter-spacing:.03em}' +
+    '.sm-group-line{stroke:var(--sm-hairline);stroke-width:1}' +
+    '.sm-edge{fill:none;stroke:var(--sm-edge);stroke-width:1.4;marker-end:url(#sm-arrow)}' +
+    '.sm-edge.sm-c-inferred{stroke-dasharray:1.5 4;stroke-linecap:round}' +
+    '.sm-edge.sm-declared{stroke-dasharray:5 4}' +
+    '.sm-arrow{fill:var(--sm-edge)}' +
+    '.sm-arrow-hi{fill:var(--sm-edgeHi)}' +
+    '.sm-card{fill:var(--sm-card);stroke:var(--sm-border);stroke-width:1}' +
+    '.sm-accent{fill:var(--f)}' +
+    '.sm-icon-bg{fill:var(--f);fill-opacity:.15}' +
+    '.sm-icon{stroke:var(--f);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}' +
+    '.sm-name{fill:var(--sm-ink);font-size:13px;font-weight:600}' +
+    '.sm-sub{fill:var(--sm-ink2);font-size:11px}' +
+    '.sm-legend{fill:var(--sm-ink2);font-size:11px}' +
+    '.sm-credit{fill:var(--sm-muted);font-size:10.5px}' +
+    '.sm-title{fill:var(--sm-ink);font-size:15px;font-weight:650}' +
+    '.sm-subtitle{fill:var(--sm-muted);font-size:11.5px}' +
+    FAMILIES.map((f) => '.sm-f-' + f.key + '{--f:var(--sm-' + f.key + ')}').join('');
+  return css;
+}
+
+/**
+ * @param {{nodes:any[], edges:any[]}} view
+ * @param {ReturnType<import('./layout.js').layoutGraph>} layout
+ * @param {{ mode?: string, interactive?: boolean, legend?: boolean, credit?: boolean, title?: string, subtitle?: string }} [opts]
+ */
+function drawSvg(view, layout, opts) {
+  const o = opts || {};
+  const L = layout.L;
+  const legendH = o.legend ? 44 : 0;
+  const headH = o.title ? 34 : 0;
+  const W = Math.round(layout.width);
+  const H = Math.round(layout.height + legendH + headH);
+  const byId = new Map(view.nodes.map((n) => [n.id, n]));
+  const edgeById = new Map(view.edges.map((e) => [e.id, e]));
+  const parts = [];
+  const label = o.title ? o.title + ' architecture' : 'Architecture map';
+  parts.push(
+    '<svg xmlns="http://www.w3.org/2000/svg" class="sm-map" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="' + escapeXml(label) + '">'
+  );
+  parts.push('<title>' + escapeXml(label) + '</title>');
+  parts.push('<style>' + mapCss(o.mode || 'auto') + '</style>');
+  parts.push(
+    '<defs>' +
+      '<marker id="sm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="sm-arrow" d="M0 1.2L9 5 0 8.8z"/></marker>' +
+      '<marker id="sm-arrow-hi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="sm-arrow-hi" d="M0 1.2L9 5 0 8.8z"/></marker>' +
+      '</defs>'
+  );
+  parts.push('<rect class="sm-bg" x="0" y="0" width="' + W + '" height="' + H + '"/>');
+  if (o.title) {
+    parts.push('<text class="sm-title" x="' + L.pad + '" y="' + (L.pad + 2) + '">' + escapeXml(o.title) + '</text>');
+    if (o.subtitle) parts.push('<text class="sm-subtitle" x="' + L.pad + '" y="' + (L.pad + 20) + '">' + escapeXml(o.subtitle) + '</text>');
+  }
+  parts.push('<g transform="translate(0,' + headH + ')">');
+
+  for (const c of layout.columns) {
+    parts.push('<text class="sm-col-title" x="' + c.x + '" y="' + (L.pad + 14) + '">' + escapeXml(c.title.toUpperCase()) + ' · ' + c.count + '</text>');
+  }
+  for (const g of layout.groups) {
+    const ty = g.y + 13;
+    parts.push('<text class="sm-group" x="' + g.x + '" y="' + ty + '">' + escapeXml(g.label) + '</text>');
+    parts.push('<line class="sm-group-line" x1="' + g.x + '" x2="' + (g.x + g.w) + '" y1="' + (g.y + L.headerH - 5) + '" y2="' + (g.y + L.headerH - 5) + '"/>');
+  }
+
+  parts.push('<g class="sm-edges">');
+  for (const ge of layout.edges) {
+    const e = edgeById.get(ge.id);
+    const cls = 'sm-edge sm-c-' + e.confidence + (e.declaredOnly ? ' sm-declared' : '');
+    const tip = (byId.get(e.from) || {}).name + ' → ' + (byId.get(e.to) || {}).name + (e.via && e.via.length ? ' (' + e.via.join(', ') + ')' : '');
+    if (o.interactive) {
+      parts.push('<path class="sm-hit" d="' + ge.d + '" data-id="' + escapeXml(e.id) + '" fill="none" stroke="transparent" stroke-width="12"/>');
+    }
+    parts.push('<path class="' + cls + '" d="' + ge.d + '" data-id="' + escapeXml(e.id) + '" data-from="' + escapeXml(e.from) + '" data-to="' + escapeXml(e.to) + '"><title>' + escapeXml(tip) + '</title></path>');
+  }
+  parts.push('</g><g class="sm-nodes">');
+
+  const textW = L.nodeW - 58;
+  for (const n of view.nodes) {
+    const b = layout.boxes.get(n.id);
+    if (!b) continue;
+    const fam = familyOf(n);
+    const sub = subtitleOf(n);
+    parts.push(
+      '<g class="sm-node sm-f-' + fam + '" data-id="' + escapeXml(n.id) + '" transform="translate(' + b.x + ',' + b.y + ')"' + (o.interactive ? ' tabindex="0" role="button" aria-label="' + escapeXml(n.name + ', ' + sub) + '"' : '') + '>' +
+        '<title>' + escapeXml(n.name + (sub ? ' — ' + sub : '')) + '</title>' +
+        '<rect class="sm-card" width="' + b.w + '" height="' + b.h + '" rx="10"/>' +
+        '<rect class="sm-accent" x="0" y="10" width="3.5" height="' + (b.h - 20) + '" rx="1.75"/>' +
+        '<rect class="sm-icon-bg" x="12" y="' + (b.h / 2 - 15) + '" width="30" height="30" rx="8"/>' +
+        '<g class="sm-icon" transform="translate(17,' + (b.h / 2 - 10) + ') scale(0.8333)">' + iconFor(n) + '</g>' +
+        '<text class="sm-name" x="52" y="' + (sub ? b.h / 2 - 3 : b.h / 2 + 4.5) + '">' + escapeXml(fit(n.name, textW, 7.3)) + '</text>' +
+        (sub ? '<text class="sm-sub" x="52" y="' + (b.h / 2 + 13) + '">' + escapeXml(fit(sub, textW, 6.1)) + '</text>' : '') +
+        '</g>'
+    );
+  }
+  parts.push('</g>');
+  parts.push('</g>');
+
+  if (o.legend) {
+    const y = H - legendH + 16;
+    let x = L.pad;
+    const used = new Set(view.nodes.map(familyOf));
+    for (const f of FAMILIES) {
+      if (!used.has(f.key)) continue;
+      parts.push('<g class="sm-f-' + f.key + '"><rect class="sm-accent" x="' + x + '" y="' + (y - 9) + '" width="10" height="10" rx="2.5"/></g>');
+      parts.push('<text class="sm-legend" x="' + (x + 15) + '" y="' + y + '">' + escapeXml(f.label) + '</text>');
+      x += 26 + f.label.length * 6.4;
+    }
+    x += 14;
+    const lines = [['sm-edge sm-c-imported', 'used in code'], ['sm-edge sm-c-declared sm-declared', 'declared, no import found'], ['sm-edge sm-c-inferred', 'inferred']];
+    for (const [cls, text] of lines) {
+      parts.push('<path class="' + cls + '" d="M' + x + ' ' + (y - 4) + 'h26" style="marker-end:none"/>');
+      parts.push('<text class="sm-legend" x="' + (x + 33) + '" y="' + y + '">' + escapeXml(text) + '</text>');
+      x += 50 + text.length * 6.2;
+    }
+    if (o.credit !== false) {
+      parts.push('<text class="sm-credit" x="' + (W - L.pad) + '" y="' + y + '" text-anchor="end">Made with Stackmap</text>');
+    }
+  }
+  parts.push('</svg>');
+  return parts.join('');
+}
+
+// The interactive viewer. Runs in the browser, inlined into one self-contained HTML file
+// together with view.js, layout.js, theme.js, icons.js and draw.js (no network, no CDN).
+(function () {
+  'use strict';
+  var DATA = JSON.parse(document.getElementById('sm-data').textContent);
+  var graph = DATA.graph;
+  var project = graph.project;
+  var byIdAll = new Map(graph.nodes.map(function (n) { return [n.id, n]; }));
+  var hasLibraries = graph.nodes.some(function (n) { return n.kind === 'library'; });
+
+  var $ = function (sel) { return document.querySelector(sel); };
+  var stage = $('#stage');
+  var canvas = $('#canvas');
+  var panel = $('#panel');
+  var search = $('#q');
+
+  var state = { libraries: false, selected: null, selectedEdge: null, hover: null, query: '', x: 0, y: 0, k: 1 };
+  var view, layout, svg, byId;
+
+  // ------------------------------------------------------------------ theme
+  var root = document.documentElement;
+  function storedTheme() { try { return localStorage.getItem('stackmap-theme'); } catch (e) { return null; } }
+  function currentTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  var saved = storedTheme();
+  if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  $('#theme').addEventListener('click', function () {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('stackmap-theme', next); } catch (e) { /* private mode */ }
+  });
+
+  // ------------------------------------------------------------------ header
+  var s = graph.summary;
+  $('#proj').textContent = project.name;
+  document.title = project.name + ' · Stackmap';
+  var bits = [];
+  if (s.apps) bits.push(plural(s.apps, 'app'));
+  if (s.services) bits.push(plural(s.services, 'service'));
+  if (s.workers) bits.push(plural(s.workers, 'worker'));
+  if (s.datastores) bits.push(plural(s.datastores, 'data store'));
+  if (s.external) bits.push(s.external + ' third-party');
+  $('#stats').textContent = bits.join(' · ');
+  if (!hasLibraries) $('#viewseg').hidden = true;
+  $('#meta').textContent = 'Stackmap ' + graph.tool.version + (project.commit ? ' · ' + project.commit.slice(0, 7) : '') + ' · ' + graph.summary.ms + ' ms';
+
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+
+  // ------------------------------------------------------------------ render
+  function render() {
+    view = viewGraph(graph, { libraries: state.libraries });
+    byId = new Map(view.nodes.map(function (n) { return [n.id, n]; }));
+    layout = layoutGraph(view);
+    canvas.innerHTML = drawSvg(view, layout, { mode: 'external', interactive: true });
+    svg = canvas.querySelector('svg');
+    $('#empty').hidden = view.nodes.length > 0;
+    if (state.selected && !byId.has(state.selected)) state.selected = null;
+    applyHighlight();
+  }
+
+  function applyHighlight() {
+    if (!svg) return;
+    var focus = state.selected || state.hover;
+    var keep = null;
+    var hiEdges = new Set();
+    if (state.selectedEdge) {
+      var se = view.edges.find(function (e) { return e.id === state.selectedEdge; });
+      if (se) {
+        keep = new Set([se.from, se.to]);
+        hiEdges.add(se.id);
+      }
+    } else if (focus) {
+      keep = neighbours(view, focus);
+      view.edges.forEach(function (e) { if (e.from === focus || e.to === focus) hiEdges.add(e.id); });
+    }
+    var q = state.query.trim().toLowerCase();
+    svg.querySelectorAll('.sm-node').forEach(function (el) {
+      var id = el.getAttribute('data-id');
+      var n = byId.get(id);
+      var match = q && matches(n, q);
+      el.classList.toggle('sm-dim', Boolean((keep && !keep.has(id)) || (q && !match && !keep)));
+      el.classList.toggle('sm-sel', id === state.selected);
+      el.classList.toggle('sm-match', Boolean(match && !keep));
+    });
+    svg.querySelectorAll('.sm-edge').forEach(function (el) {
+      var id = el.getAttribute('data-id');
+      var on = hiEdges.has(id);
+      el.classList.toggle('sm-hi', on);
+      el.classList.toggle('sm-dim', Boolean((keep && !on) || (q && !keep)));
+    });
+  }
+
+  function matches(n, q) {
+    if (!n) return false;
+    var hay = [n.name, n.path, n.packageName, n.category, n.categoryLabel, n.kind, n.image].concat(n.frameworks || [], n.platforms || []).join(' ').toLowerCase();
+    return hay.indexOf(q) !== -1;
+  }
+
+  // ------------------------------------------------------------------ pan & zoom
+  function apply() { canvas.style.transform = 'translate(' + state.x + 'px,' + state.y + 'px) scale(' + state.k + ')'; }
+  function fit() {
+    if (!layout) return;
+    var r = stage.getBoundingClientRect();
+    var k = Math.min(r.width / layout.width, r.height / layout.height, 1.4) * 0.96;
+    state.k = Math.max(0.08, k);
+    state.x = (r.width - layout.width * state.k) / 2;
+    state.y = Math.max(0, (r.height - layout.height * state.k) / 2);
+    apply();
+  }
+  function zoomAt(factor, cx, cy) {
+    var k = Math.min(4, Math.max(0.08, state.k * factor));
+    factor = k / state.k;
+    state.x = cx - (cx - state.x) * factor;
+    state.y = cy - (cy - state.y) * factor;
+    state.k = k;
+    apply();
+  }
+  function centerOn(id) {
+    var b = layout.boxes.get(id);
+    if (!b) return;
+    var r = stage.getBoundingClientRect();
+    if (state.k < 0.7) state.k = 0.9;
+    state.x = r.width / 2 - (b.x + b.w / 2) * state.k;
+    state.y = r.height / 2 - (b.y + b.h / 2) * state.k;
+    apply();
+  }
+
+  stage.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    var r = stage.getBoundingClientRect();
+    if (e.ctrlKey || e.metaKey || Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      var dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+      zoomAt(Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX - r.left, e.clientY - r.top);
+    } else {
+      state.x -= e.deltaX;
+      apply();
+    }
+  }, { passive: false });
+
+  var pointers = new Map();
+  var drag = null;
+  var pinch = null;
+  stage.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 2) {
+      var p = Array.from(pointers.values());
+      pinch = { d: dist(p[0], p[1]), k: state.k };
+      drag = null;
+    } else {
+      drag = { x: e.clientX, y: e.clientY, ox: state.x, oy: state.y, moved: false, target: e.target };
+    }
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && pointers.size === 2) {
+      var p = Array.from(pointers.values());
+      var r = stage.getBoundingClientRect();
+      var cx = (p[0].x + p[1].x) / 2 - r.left;
+      var cy = (p[0].y + p[1].y) / 2 - r.top;
+      zoomAt((pinch.k * dist(p[0], p[1])) / pinch.d / state.k, cx, cy);
+      return;
+    }
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+    var dy = e.clientY - drag.y;
+    if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 4) {
+      drag.moved = true;
+      stage.classList.add('panning');
+      try { stage.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    }
+    if (drag.moved) {
+      state.x = drag.ox + dx;
+      state.y = drag.oy + dy;
+      apply();
+    }
+  });
+  function endPointer(e) {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinch = null;
+    if (drag && !drag.moved && e.type === 'pointerup') click(drag.target);
+    if (pointers.size === 0) {
+      drag = null;
+      stage.classList.remove('panning');
+    }
+  }
+  window.addEventListener('pointerup', endPointer);
+  window.addEventListener('pointercancel', endPointer);
+  function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y) || 1; }
+
+  function click(target) {
+    var nodeEl = target.closest && target.closest('.sm-node');
+    var edgeEl = target.closest && (target.closest('.sm-hit') || target.closest('.sm-edge'));
+    if (nodeEl) selectNode(nodeEl.getAttribute('data-id'));
+    else if (edgeEl) selectEdge(edgeEl.getAttribute('data-id'));
+    else clearSelection();
+  }
+
+  stage.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest('.sm-node');
+    var id = el ? el.getAttribute('data-id') : null;
+    if (id !== state.hover) {
+      state.hover = id;
+      if (!state.selected && !state.selectedEdge) applyHighlight();
+    }
+  });
+  stage.addEventListener('mouseleave', function () {
+    state.hover = null;
+    if (!state.selected) applyHighlight();
+  });
+  stage.addEventListener('keydown', function (e) {
+    var el = e.target.closest && e.target.closest('.sm-node');
+    if (el && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      selectNode(el.getAttribute('data-id'));
+    }
+  });
+
+  // ------------------------------------------------------------------ selection & panel
+  function selectNode(id, opts) {
+    state.selected = id;
+    state.selectedEdge = null;
+    applyHighlight();
+    showNode(byId.get(id) || byIdAll.get(id));
+    if (opts && opts.center) centerOn(id);
+  }
+  function selectEdge(id) {
+    state.selected = null;
+    state.selectedEdge = id;
+    applyHighlight();
+    showEdge(view.edges.find(function (e) { return e.id === id; }));
+  }
+  function clearSelection() {
+    state.selected = null;
+    state.selectedEdge = null;
+    panel.hidden = true;
+    applyHighlight();
+  }
+
+  var CONF = {
+    imported: ['in code', 'Imported or called in source code.'],
+    configured: ['configured', 'Wired up in configuration: env vars, docker-compose, infrastructure or ORM config.'],
+    declared: ['declared', 'Declared in a package manifest.'],
+    inferred: ['inferred', 'Inferred from naming, such as an API_URL env var. Check before relying on it.'],
+  };
+
+  function esc(t) { return escapeXml(t); }
+  function srcUrl(ev) {
+    if (!project.repoUrl) return null;
+    var ref = project.commit || 'HEAD';
+    var p = [project.prefix, ev.file].filter(Boolean).join('/');
+    if (/gitlab/.test(project.repoUrl)) return project.repoUrl + '/-/blob/' + ref + '/' + p + '#L' + ev.line;
+    if (/bitbucket/.test(project.repoUrl)) return project.repoUrl + '/src/' + ref + '/' + p + '#lines-' + ev.line;
+    return project.repoUrl + '/blob/' + ref + '/' + p + '#L' + ev.line;
+  }
+  function evidenceList(list, total) {
+    if (!list || !list.length) return '<p class="more">No evidence recorded.</p>';
+    var html = '<ul class="ev">' + list.map(function (ev) {
+      var url = srcUrl(ev);
+      var loc = esc(ev.file) + ':' + ev.line;
+      return '<li><div class="why">' + esc(ev.why) + '</div><div class="loc">' + (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + loc + '</a>' : loc) + '</div>' + (ev.text ? '<pre>' + esc(ev.text) + '</pre>' : '') + '</li>';
+    }).join('') + '</ul>';
+    if (total && total > list.length) html += '<div class="more">and ' + (total - list.length) + ' more place' + (total - list.length === 1 ? '' : 's') + '</div>';
+    return html;
+  }
+  function iconBox(n) {
+    var fam = familyOf(n);
+    return '<div class="p-icon" style="background:color-mix(in srgb,var(--sm-' + fam + ') 15%,transparent);stroke:var(--sm-' + fam + ')"><svg viewBox="0 0 24 24">' + iconFor(n) + '</svg></div>';
+  }
+  function kindLabel(n) {
+    if (n.unit) return (KIND_LABELS[n.kind] || n.kind) + (n.language ? ' · ' + n.language : '');
+    if (n.container) return 'Container' + (n.image ? ' · ' + n.image : '');
+    return (CATEGORY_SINGULAR[n.category] || KIND_LABELS[n.kind] || '') + (n.kind === 'datastore' ? ' · data store' : n.kind === 'external' ? ' · third-party' : '');
+  }
+  function relRow(e, otherId, dir) {
+    var other = byId.get(otherId) || byIdAll.get(otherId);
+    if (!other) return '';
+    var c = CONF[e.confidence] || CONF.declared;
+    var via = (e.via || []).filter(function (v) { return v.charAt(0) !== '$'; });
+    var envs = (e.via || []).filter(function (v) { return v.charAt(0) === '$'; });
+    var chips = '<span class="chip c-' + e.confidence + '">' + (e.declaredOnly ? 'declared only' : c[0]) + '</span>' +
+      via.map(function (v) { return '<span class="chip">via ' + esc(v) + '</span>'; }).join('') +
+      (e.through || []).slice(0, 2).map(function (t) { return '<span class="chip">through ' + esc(t) + '</span>'; }).join('') +
+      envs.slice(0, 2).map(function (v) { return '<span class="chip mono">' + esc(v) + '</span>'; }).join('');
+    return '<li><details><summary><span class="name">' + esc(other.name) + '</span>' + chips + '<button class="go" data-go="' + esc(otherId) + '">open</button></summary><div class="body">' +
+      (e.declaredOnly ? '<div class="note">Declared in a manifest, but no runtime import was found. It may be unused.</div>' : '') +
+      evidenceList(e.evidence, e.evidenceCount) + '</div></details></li>';
+  }
+  function showNode(n) {
+    if (!n) return;
+    var out = view.edges.filter(function (e) { return e.from === n.id; });
+    var inc = view.edges.filter(function (e) { return e.to === n.id; });
+    var h = '<div class="p-head">' + iconBox(n) + '<div><div class="p-title">' + esc(n.name) + '</div><div class="p-kind">' + esc(kindLabel(n)) + '</div></div><button class="btn p-close" aria-label="Close" data-close>✕</button></div>';
+    if (n.description) h += '<p class="p-desc">' + esc(n.description) + '</p>';
+    if (n.path) h += '<div class="mono" style="color:var(--sm-ink2)">' + esc(n.path) + (n.packageName && n.packageName !== n.name ? ' · ' + esc(n.packageName) : '') + '</div>';
+    var chips = (n.frameworks || []).map(function (f) { return '<span class="chip">' + esc(f) + '</span>'; }).concat((n.platforms || []).map(function (p) { return '<span class="chip">deploys: ' + esc(p) + '</span>'; }));
+    if (chips.length) h += '<div class="chips">' + chips.join('') + '</div>';
+    if (n.url) h += '<div style="margin-top:6px"><a href="' + esc(n.url) + '" target="_blank" rel="noopener">' + esc(n.url.replace(/^https?:\/\//, '')) + '</a></div>';
+    if (out.length) h += '<h3>' + (n.unit || n.container ? 'Talks to' : 'Depends on') + ' · ' + out.length + '</h3><ul class="rel">' + out.map(function (e) { return relRow(e, e.to); }).join('') + '</ul>';
+    if (inc.length) h += '<h3>Used by · ' + inc.length + '</h3><ul class="rel">' + inc.map(function (e) { return relRow(e, e.from); }).join('') + '</ul>';
+    if (!n.unit) {
+      var imp = impactOf(graph, n.id);
+      var names = [];
+      imp.forEach(function (v, id) { var x = byIdAll.get(id); if (x && x.kind !== 'library') names.push(x.name); });
+      if (names.length) h += '<h3>If ' + esc(n.name) + ' is down</h3><div class="note">' + names.length + ' part' + (names.length === 1 ? '' : 's') + ' of the system depend on it, directly or through other parts: ' + names.slice(0, 12).map(esc).join(', ') + (names.length > 12 ? ', …' : '') + '</div>';
+    }
+    h += '<h3>Why it is on the map</h3>' + evidenceList(n.evidence, n.evidenceCount);
+    if (n.env && n.env.length) h += '<h3>Reads env vars · ' + n.env.length + '</h3><div class="env">' + n.env.map(function (v) { return '<code>' + esc(v) + '</code>'; }).join('') + '</div>';
+    openPanel(h);
+  }
+  function showEdge(e) {
+    if (!e) return;
+    var a = byId.get(e.from);
+    var b = byId.get(e.to);
+    var c = CONF[e.confidence] || CONF.declared;
+    var h = '<div class="p-head"><div><div class="p-title">' + esc(a.name) + ' → ' + esc(b.name) + '</div><div class="p-kind">' + esc(e.kind) + '</div></div><button class="btn p-close" aria-label="Close" data-close>✕</button></div>';
+    h += '<div class="chips"><span class="chip c-' + e.confidence + '">' + c[0] + '</span>' + (e.via || []).map(function (v) { return '<span class="chip">' + esc(v) + '</span>'; }).join('') + '</div>';
+    h += '<div class="note">' + c[1] + (e.declaredOnly ? ' No runtime import was found, so it may be unused.' : '') + '</div>';
+    if (e.through && e.through.length) h += '<div class="note">Through internal ' + (e.through.length === 1 ? 'library' : 'libraries') + ': ' + e.through.map(esc).join(', ') + '. Switch to “Everything” to see them.</div>';
+    h += '<h3>Evidence</h3>' + evidenceList(e.evidence, e.evidenceCount);
+    openPanel(h);
+  }
+  function openPanel(html) {
+    panel.innerHTML = html;
+    panel.hidden = false;
+    panel.scrollTop = 0;
+  }
+  panel.addEventListener('click', function (e) {
+    var go = e.target.closest('[data-go]');
+    if (go) {
+      e.preventDefault();
+      selectNode(go.getAttribute('data-go'), { center: true });
+      return;
+    }
+    if (e.target.closest('[data-close]')) clearSelection();
+  });
+
+  // ------------------------------------------------------------------ controls
+  search.addEventListener('input', function () {
+    state.query = search.value;
+    applyHighlight();
+  });
+  search.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var q = search.value.trim().toLowerCase();
+      var hit = view.nodes.find(function (n) { return n.name.toLowerCase() === q; }) || view.nodes.find(function (n) { return matches(n, q); });
+      if (hit) {
+        search.blur();
+        state.query = '';
+        search.value = '';
+        selectNode(hit.id, { center: true });
+      }
+    } else if (e.key === 'Escape') {
+      search.value = '';
+      state.query = '';
+      search.blur();
+      applyHighlight();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.target === search) return;
+    if (e.key === '/') { e.preventDefault(); search.focus(); }
+    else if (e.key === 'Escape') clearSelection();
+    else if (e.key === 'f' || e.key === '0') fit();
+    else if (e.key === '+' || e.key === '=') zoomCenter(1.25);
+    else if (e.key === '-') zoomCenter(0.8);
+  });
+  function zoomCenter(f) { var r = stage.getBoundingClientRect(); zoomAt(f, r.width / 2, r.height / 2); }
+  $('#zin').addEventListener('click', function () { zoomCenter(1.25); });
+  $('#zout').addEventListener('click', function () { zoomCenter(0.8); });
+  $('#zfit').addEventListener('click', fit);
+  document.querySelectorAll('#viewseg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.libraries = b.getAttribute('data-view') === 'all';
+      document.querySelectorAll('#viewseg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      render();
+      fit();
+      hint(state.libraries ? 'Showing internal libraries' : 'Libraries folded into the apps that use them');
+    });
+  });
+
+  // ------------------------------------------------------------------ export
+  function download(name, type, data) {
+    var blob = data instanceof Blob ? data : new Blob([data], { type: type });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  function fileBase() { return String(project.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-stackmap'; }
+  function standaloneSvg() {
+    return drawSvg(view, layout, { mode: currentTheme(), legend: true, title: project.name, subtitle: $('#stats').textContent });
+  }
+  function closeMenu() { $('#exportmenu').removeAttribute('open'); }
+  $('#ex-svg').addEventListener('click', function () { download(fileBase() + '.svg', 'image/svg+xml', standaloneSvg()); closeMenu(); });
+  $('#ex-png').addEventListener('click', function () {
+    var markup = standaloneSvg();
+    var img = new Image();
+    var w = Number(markup.match(/width="(\d+)"/)[1]);
+    var h = Number(markup.match(/height="(\d+)"/)[1]);
+    img.onload = function () {
+      var scale = Math.min(2, 8000 / Math.max(w, h));
+      var c = document.createElement('canvas');
+      c.width = Math.round(w * scale);
+      c.height = Math.round(h * scale);
+      var ctx = c.getContext('2d');
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0, w, h);
+      c.toBlob(function (blob) { download(fileBase() + '.png', 'image/png', blob); });
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markup);
+    closeMenu();
+  });
+  $('#ex-mmd').addEventListener('click', function () {
+    var text = state.libraries ? DATA.mermaid.everything : DATA.mermaid.services;
+    var done = function () { toast('Mermaid copied. Paste it into a ```mermaid block'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { download(fileBase() + '.mmd', 'text/plain', text); });
+    else download(fileBase() + '.mmd', 'text/plain', text);
+    closeMenu();
+  });
+  $('#ex-json').addEventListener('click', function () { download(fileBase() + '.json', 'application/json', JSON.stringify(graph, null, 2)); closeMenu(); });
+  document.addEventListener('click', function (e) { if (!e.target.closest('#exportmenu')) closeMenu(); });
+
+  var toastTimer;
+  function toast(msg) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2200);
+  }
+  var hintTimer;
+  function hint(msg) {
+    var t = $('#hint');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(function () { t.classList.remove('show'); }, 1800);
+  }
+
+  // ------------------------------------------------------------------ start
+  render();
+  fit();
+  window.addEventListener('resize', function () { fit(); });
+  var start = location.hash.slice(1);
+  if (start) {
+    var target = graph.nodes.find(function (n) { return n.name === decodeURIComponent(start) || n.id === decodeURIComponent(start); });
+    if (target && byId.has(target.id)) selectNode(target.id, { center: true });
+  }
+})();
+
+</script>
+</body>
+</html>

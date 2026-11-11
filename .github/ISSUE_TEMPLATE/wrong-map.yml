@@ -1,0 +1,34 @@
+name: Wrong or missing on the map
+description: Stackmap drew something that is not there, missed a connection, or classified a service wrongly.
+labels: [detection]
+body:
+  - type: input
+    id: repo
+    attributes:
+      label: Public repository (if any)
+      placeholder: https://github.com/owner/repo
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      placeholder: "`apps/api` should be a service talking to PostgreSQL"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What Stackmap showed
+      description: Paste the relevant part of `npx stackmap-cli why <name>` or `npx stackmap-cli -f mermaid`.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Smallest reproduction
+      description: A manifest (package.json, pyproject.toml, docker-compose.yml ...) and a source file or two is usually enough.
+  - type: input
+    id: version
+    attributes:
+      label: Stackmap version
+      placeholder: npx stackmap-cli --version

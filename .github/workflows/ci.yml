@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [20, 22, 24, 26]
+        exclude:
+          # Node 20's test runner does not expand globs, and Windows shells do not either.
+          - os: windows-latest
+            node: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm test
+      - name: Map this repository's own fixtures
+        run: node bin/stackmap.js test/fixtures/saas --no-open -o stackmap.html
+
+  action:
+    name: The GitHub Action maps a project and enforces rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Add a rule the fixture breaks
+        run: echo '{"rules":[{"deny":"kind:app -> category:database","message":"Frontends go through the API"}]}' > test/fixtures/saas/.stackmap.json
+      - name: Run the action
+        id: map
+        continue-on-error: true
+        uses: ./
+        with:
+          path: test/fixtures/saas
+          html: stackmap.html
+      - name: The rule violation must fail the step, and the map must exist
+        run: |
+          test "${{ steps.map.outcome }}" = "failure"
+          test "${{ steps.map.outputs.violations }}" = "1"
+          test -s stackmap.html
+          grep -q '"schema":"stackmap/1"' stackmap.html

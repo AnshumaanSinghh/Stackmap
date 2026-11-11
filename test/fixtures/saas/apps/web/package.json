@@ -1,0 +1,15 @@
+{
+  "name": "@acme/web",
+  "private": true,
+  "description": "Customer dashboard",
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": {
+    "@acme/db": "workspace:*",
+    "@acme/ui": "workspace:*",
+    "@stripe/stripe-js": "^4.0.0",
+    "next": "15.0.3",
+    "posthog-js": "^1.180.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}

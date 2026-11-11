@@ -1,0 +1,17 @@
+{
+  "name": "@acme/api",
+  "private": true,
+  "scripts": { "dev": "tsx watch src/server.ts", "start": "node dist/server.js" },
+  "dependencies": {
+    "@acme/db": "workspace:*",
+    "@sentry/node": "^8.40.0",
+    "fastify": "^5.1.0",
+    "ioredis": "^5.4.1",
+    "openai": "^4.73.0",
+    "resend": "^4.0.1",
+    "stripe": "^17.4.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0"
+  }
+}

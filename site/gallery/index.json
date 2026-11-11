@@ -1,0 +1,184 @@
+[
+  {
+    "slug": "cal-com",
+    "repo": "calcom/cal.com",
+    "title": "Cal.com",
+    "blurb": "Scheduling platform: Next.js and NestJS over PostgreSQL, with dozens of calendar and video integrations.",
+    "commit": "ef7954d16ab50882ca2f263c551537115b8a8bb1",
+    "scannedAt": "2026-11-11",
+    "ms": 978,
+    "files": 7468,
+    "counts": {
+      "apps": 2,
+      "services": 4,
+      "workers": 0,
+      "datastores": 5,
+      "external": 17,
+      "edges": 610
+    },
+    "languages": [
+      "TypeScript",
+      "JavaScript",
+      "PHP"
+    ]
+  },
+  {
+    "slug": "plane",
+    "repo": "makeplane/plane",
+    "title": "Plane",
+    "blurb": "Project tracker: Django and Celery workers on RabbitMQ, three React apps, MinIO storage.",
+    "commit": "618d0eb74658329a6f6e92434ac54231422c5b96",
+    "scannedAt": "2026-11-11",
+    "ms": 678,
+    "files": 5166,
+    "counts": {
+      "apps": 3,
+      "services": 5,
+      "workers": 2,
+      "datastores": 5,
+      "external": 6,
+      "edges": 85
+    },
+    "languages": [
+      "TypeScript",
+      "Python",
+      "JavaScript"
+    ]
+  },
+  {
+    "slug": "mastodon",
+    "repo": "mastodon/mastodon",
+    "title": "Mastodon",
+    "blurb": "Social network server: a Rails app, a Node streaming service and Sidekiq workers.",
+    "commit": "cc76f85b9afc02b1265e68e6ee6c24ab266771b4",
+    "scannedAt": "2026-11-11",
+    "ms": 498,
+    "files": 10114,
+    "counts": {
+      "apps": 1,
+      "services": 1,
+      "workers": 1,
+      "datastores": 4,
+      "external": 3,
+      "edges": 11
+    },
+    "languages": [
+      "Ruby",
+      "TypeScript",
+      "JavaScript"
+    ]
+  },
+  {
+    "slug": "langfuse",
+    "repo": "langfuse/langfuse",
+    "title": "Langfuse",
+    "blurb": "LLM observability: Next.js web and an Express worker over ClickHouse, PostgreSQL and Redis.",
+    "commit": "23a1cdd5ab4306fc9e270e5ad5d21e3d26e6f108",
+    "scannedAt": "2026-11-11",
+    "ms": 1136,
+    "files": 7856,
+    "counts": {
+      "apps": 1,
+      "services": 3,
+      "workers": 1,
+      "datastores": 8,
+      "external": 21,
+      "edges": 67
+    },
+    "languages": [
+      "TypeScript",
+      "Rust",
+      "JavaScript"
+    ]
+  },
+  {
+    "slug": "dub",
+    "repo": "dubinc/dub",
+    "title": "Dub",
+    "blurb": "Link management: one Next.js app talking to 20+ APIs, PlanetScale, Tinybird and Upstash.",
+    "commit": "6b463b4bdd9ed2fd9aa416f67b5b77d317b1471e",
+    "scannedAt": "2026-11-11",
+    "ms": 386,
+    "files": 2377,
+    "counts": {
+      "apps": 1,
+      "services": 1,
+      "workers": 0,
+      "datastores": 5,
+      "external": 19,
+      "edges": 34
+    },
+    "languages": [
+      "TypeScript",
+      "JavaScript"
+    ]
+  },
+  {
+    "slug": "immich",
+    "repo": "immich-app/immich",
+    "title": "Immich",
+    "blurb": "Photo backup: NestJS server, SvelteKit web, a Python machine-learning service.",
+    "commit": "3b2f4642882189260d11fb529bbf8b9021a075ff",
+    "scannedAt": "2026-11-11",
+    "ms": 310,
+    "files": 3639,
+    "counts": {
+      "apps": 3,
+      "services": 7,
+      "workers": 0,
+      "datastores": 3,
+      "external": 5,
+      "edges": 19
+    },
+    "languages": [
+      "TypeScript",
+      "JavaScript",
+      "Python"
+    ]
+  },
+  {
+    "slug": "chatwoot",
+    "repo": "chatwoot/chatwoot",
+    "title": "Chatwoot",
+    "blurb": "Customer support: a Rails monolith with Sidekiq, Vue, and 30+ channel integrations.",
+    "commit": "6d01a25d8f717310598f92b8b24986abbeac3568",
+    "scannedAt": "2026-11-11",
+    "ms": 583,
+    "files": 9936,
+    "counts": {
+      "apps": 1,
+      "services": 1,
+      "workers": 1,
+      "datastores": 7,
+      "external": 33,
+      "edges": 45
+    },
+    "languages": [
+      "Ruby",
+      "JavaScript",
+      "TypeScript"
+    ]
+  },
+  {
+    "slug": "outline",
+    "repo": "outline/outline",
+    "title": "Outline",
+    "blurb": "Team wiki: one Koa + React app with PostgreSQL, Redis, S3 and many sign-in providers.",
+    "commit": "309dd022f6ff5c67ce5d264e081fd6c559243163",
+    "scannedAt": "2026-11-11",
+    "ms": 448,
+    "files": 2718,
+    "counts": {
+      "apps": 1,
+      "services": 0,
+      "workers": 0,
+      "datastores": 3,
+      "external": 18,
+      "edges": 21
+    },
+    "languages": [
+      "TypeScript",
+      "JavaScript"
+    ]
+  }
+]

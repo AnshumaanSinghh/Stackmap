@@ -1,0 +1,34 @@
+name: Missing technology
+description: Stackmap did not detect a database, queue, API, framework or hosting platform your project uses.
+title: "Detect <technology>"
+labels: [catalog, good first issue]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Technology
+      placeholder: Acme Mail
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Homepage or docs
+      placeholder: https://acmemail.example/docs
+  - type: textarea
+    id: signals
+    attributes:
+      label: How a project uses it
+      description: Package names (npm, PyPI, Go ...), Docker image, env var names, or API hostname. Any one helps.
+      placeholder: |
+        npm: @acme-mail/node
+        env: ACME_MAIL_API_KEY
+        host: api.acmemail.example
+    validations:
+      required: true
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to add it myself (see CONTRIBUTING.md, it takes about a minute)

@@ -1,0 +1,64 @@
+name: Stackmap
+description: Architecture diagrams from your code. Comments architecture changes on pull requests, keeps a README diagram current, and enforces architecture rules.
+author: Anshumaan Singh
+branding:
+  icon: map
+  color: blue
+
+inputs:
+  path:
+    description: Project directory to map, relative to the repository root.
+    required: false
+    default: "."
+  comment:
+    description: On pull requests, post (and keep updating) one comment that lists architecture changes, with a diagram. Needs `pull-requests: write`.
+    required: false
+    default: "true"
+  comment-when:
+    description: "`changed` comments only when the architecture changed (an earlier comment is still updated). `always` comments on every pull request."
+    required: false
+    default: changed
+  summary:
+    description: Write the architecture map (Mermaid) and the change list to the job summary.
+    required: false
+    default: "true"
+  check:
+    description: Enforce the `rules` in .stackmap.json. Violations fail the step and are annotated on the line that caused them.
+    required: false
+    default: "true"
+  readme:
+    description: Markdown file whose Stackmap diagram should be kept current, for example `README.md`. Empty to skip.
+    required: false
+    default: ""
+  readme-mode:
+    description: "`check` fails when the diagram is out of date. `write` updates the file in the workspace (commit it in a later step)."
+    required: false
+    default: check
+  html:
+    description: Also write the interactive map to this path, for example `stackmap.html`, so a later step can upload it as an artifact.
+    required: false
+    default: ""
+  config:
+    description: Path to the config file, relative to `path`. Defaults to .stackmap.json.
+    required: false
+    default: ""
+  github-token:
+    description: Token used to read and write the pull request comment.
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  changed:
+    description: "`true` when the pull request changes the architecture."
+  added:
+    description: Number of added components and connections.
+  removed:
+    description: Number of removed components and connections.
+  violations:
+    description: Number of rule violations.
+  json:
+    description: Path to the full architecture graph (JSON) written by this run.
+
+runs:
+  using: node24
+  main: action/index.js

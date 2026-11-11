@@ -1,0 +1,6 @@
+{
+  "name": "@acme/worker",
+  "private": true,
+  "scripts": { "start": "node dist/index.js" },
+  "dependencies": { "@acme/db": "workspace:*", "bullmq": "^5.30.0" }
+}

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/AnshumaanSinghh/Stackmap/discussions
+    about: Ask how to map something, share a map, or suggest a feature.
+  - name: Security issue
+    url: https://github.com/AnshumaanSinghh/Stackmap/security/advisories/new
+    about: Please report vulnerabilities privately.

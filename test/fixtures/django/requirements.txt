@@ -1,0 +1,6 @@
+Django==5.1.3
+celery[redis]==5.4.0
+psycopg2-binary==2.9.10
+boto3==1.35.70  # S3 uploads
+stripe>=11.0
+sentry-sdk[django]==2.19.0

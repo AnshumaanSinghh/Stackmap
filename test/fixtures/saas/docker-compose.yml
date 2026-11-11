@@ -1,0 +1,30 @@
+x-env: &common-env
+  NODE_ENV: development
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:7
+  api:
+    build: ./apps/api
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      <<: *common-env
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/acme
+      REDIS_URL: redis://redis:6379
+  worker:
+    build:
+      context: .
+      dockerfile: apps/worker/Dockerfile
+    depends_on:
+      redis:
+        condition: service_started
+  mailpit:
+    image: axllent/mailpit:latest

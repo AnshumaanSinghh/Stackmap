@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - POSTGRES_DB=shop
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on: [db, redis]
+  worker:
+    build: .
+    command: celery -A shop worker
+    depends_on: [db, redis]
+  db:
+    image: postgres:16
+  redis:
+    image: redis:7-alpine

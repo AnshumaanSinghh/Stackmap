@@ -1,0 +1,5 @@
+app = "acme-orders"
+primary_region = "iad"
+
+[http_service]
+  internal_port = 8080

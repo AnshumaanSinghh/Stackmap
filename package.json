@@ -1,39 +1,59 @@
 {
-  "name": "stackmap",
+  "name": "stackmap-cli",
   "version": "1.0.0",
-  "private": true,
-  "packageManager": "pnpm@9.15.9",
-  "description": "AI-native system design workspace",
-  "keywords": [
-    "architecture",
-    "ai",
-    "system-design",
-    "canvas",
-    "collaboration",
-    "realtime"
+  "description": "Architecture diagrams generated from your code. Maps every service, database, queue and third-party API, with a file:line receipt for each one. Interactive map, Mermaid for your README, PR architecture diffs, MCP server. Zero dependencies.",
+  "type": "module",
+  "bin": {
+    "stackmap": "bin/stackmap.js"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "src",
+    "action",
+    "action.yml",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
-    "db:push": "prisma db push",
-    "db:generate": "prisma generate",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "test": "node --test test/*.test.js",
+    "map": "node bin/stackmap.js",
+    "verify:catalog": "node scripts/verify-catalog.js",
+    "gallery": "node scripts/build-gallery.js",
+    "site": "node scripts/build-site.js"
   },
-  "dependencies": {
-    "next": "14.2.35",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+  "engines": {
+    "node": ">=20"
   },
-  "devDependencies": {
-    "turbo": "^2.0.0",
-    "typescript": "^5.5.4",
-    "prettier": "^3.3.3",
-    "@types/node": "^20.14.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0"
-  }
+  "keywords": [
+    "architecture",
+    "architecture-diagram",
+    "system-design",
+    "diagram",
+    "mermaid",
+    "c4",
+    "visualization",
+    "dependency-graph",
+    "monorepo",
+    "docker-compose",
+    "devtools",
+    "cli",
+    "github-action",
+    "mcp",
+    "documentation",
+    "onboarding"
+  ],
+  "author": "Anshumaan Singh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnshumaanSinghh/Stackmap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AnshumaanSinghh/Stackmap/issues"
+  },
+  "homepage": "https://anshumaansinghh.github.io/Stackmap/"
 }
