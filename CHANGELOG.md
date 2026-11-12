@@ -6,6 +6,7 @@ Stackmap is rebuilt from the ground up as a command-line tool that maps a system
 
 - Maps apps, services, workers, libraries, databases, caches, queues, storage, search and third-party APIs from JavaScript and TypeScript, Python, Go, Rust, Ruby, PHP, Java and Kotlin, .NET and Elixir projects.
 - Reads docker-compose, Dockerfiles, Kubernetes manifests, Terraform, Wrangler, Render, `.env.example` files and ORM configuration.
+- Reads self-hosting compose files the way they run. It leaves out one-off jobs (migrations, init), services behind opt-in profiles, dev-only copies of the app and database admin UIs. It maps the project's published image back to its source folder, and recognises a service built `FROM postgres` as PostgreSQL.
 - Every node and edge carries file:line evidence and a confidence level; declared-but-unused dependencies are flagged.
 - Outputs: interactive self-contained HTML, SVG, Mermaid, Markdown inventory, JSON and Graphviz DOT.
 - `stackmap readme` keeps a Mermaid diagram in the README current; `--check` fails CI when it drifts.

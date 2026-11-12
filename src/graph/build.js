@@ -32,10 +32,12 @@ const MAX_SOURCE_FILES_PER_UNIT = 6_000;
 const APP_FILE = /^(src\/)?(index\.html|vite\.config\.[cm]?[jt]s|next\.config\.[cm]?[jt]s|nuxt\.config\.[jt]s|svelte\.config\.[jt]s|astro\.config\.[cm]?[jt]s|remix\.config\.[cm]?js|react-router\.config\.ts|angular\.json|app\.json|electron-builder\.(json|ya?ml)|tauri\.conf\.json|Procfile|main\.(ts|js)|server\.(ts|js))$/;
 const MAX_SOURCE_BYTES = 512 * 1024;
 
-// Manifests in these folders are examples, fixtures or templates, not parts of the system.
-const NOT_A_UNIT = /(^|\/)(examples?|example[-_]apps?|samples?|playgrounds?|fixtures?|__fixtures__|__tests__|tests?|e2e|testdata|templates?|boilerplates?|starters?|\.github|node_modules|vendor|third[-_]?party)(\/|$)/i;
-// Packages that only hold tests: "app-tests", "e2e-utils", "integration-tests", "test-utils".
-const TEST_PACKAGE = /(^|[-_.])(tests?|e2e|specs?|testing|test-utils|integration-tests|load-tests|benchmarks?)$|^(e2e|tests?)[-_]/i;
+// Manifests in these folders are examples, fixtures, templates or dev scripts, not parts of the system.
+const NOT_A_UNIT = /(^|\/)(examples?|example[-_]apps?|samples?|playgrounds?|fixtures?|__fixtures__|__tests__|tests?|e2e|testdata|templates?|boilerplates?|starters?|scripts?|hack|\.github|node_modules|vendor|third[-_]?party)(\/|$)/i;
+// Packages that only hold tests or a component workbench: "app-tests", "e2e-utils", "storybook".
+const TEST_PACKAGE = /(^|[-_.])(tests?|e2e|specs?|testing|test-utils|integration-tests|load-tests|benchmarks?|storybook)$|^(e2e|tests?)[-_]/i;
+// A package that ships a test runner as a runtime dependency is a test suite (a post-deploy check).
+const TEST_RUNNER = /^(@playwright\/test|cypress|@cucumber\/cucumber|codeceptjs|testcafe|webdriverio)$/;
 const LIBRARY_ROOTS = /^(packages|libs?|modules|shared|common|internal|crates|pkg|sdks?|plugins|tooling|tools|configs?)(\/|$)/i;
 const WORKER_NAME = /(^|[-_/@])(workers?|jobs?|queues?|consumers?|cron|crons|scheduler|tasks|background)([-_/]|$)/i;
 const WORKER_COMMAND = /\b(celery|sidekiq|rq\s+worker|dramatiq|huey|arq|queue:work|horizon|good_job|solid_queue|worker|beat|cron)\b/i;
@@ -66,6 +68,8 @@ export function scan(rootDir, opts = {}) {
     const m = readManifest(root, file, { gradleCatalog });
     if (!m) continue;
     warnings.push(...m.errors);
+    const testSuite = m.dir !== '' && m.deps.some((d) => !d.dev && TEST_RUNNER.test(d.name)) && !m.deps.some((d) => !d.dev && catalog.matchPackage(m.ecosystem, d.name)?.kind === 'framework');
+    if (m.ecosystem === 'npm' && testSuite && !forceInclude(file)) continue;
     let u = unitsByDir.get(m.dir);
     if (!u) {
       u = newUnit(m.dir);
@@ -150,6 +154,9 @@ export function scan(rootDir, opts = {}) {
   }
 
   const units = [...unitsByDir.values()];
+  const git = opts.git === false ? {} : gitInfo(root);
+  const projectName = config.name || projectNameOf(root, unitsByDir.get(''), git.repoUrl);
+  const projectSlug = String(projectName).toLowerCase();
   const byPackage = new Map();
   for (const u of units) for (const m of u.manifests) if (m.name && (m.ecosystem === 'npm' || m.ecosystem === 'pypi' || m.ecosystem === 'cargo' || m.ecosystem === 'go' || m.ecosystem === 'hex')) {
     byPackage.set(`${m.ecosystem}:${normPkg(m.ecosystem, m.name)}`, u);
@@ -375,42 +382,77 @@ export function scan(rootDir, opts = {}) {
   }
   const pick = (x) => (x && !isBareRoot(x) ? x : null);
   const pickByName = (x) => (x && !isBareRoot(x) && !importedLibraries.has(x) ? x : null);
+  const buildDirs = (s) => {
+    const ctxDir = joinRel(s.build.composeDir, s.build.context);
+    return { ctxDir, dockerDir: s.build.dockerfile ? dirOf(joinRel(ctxDir, s.build.dockerfile)) : null };
+  };
+  // The unit whose folder the image is built from: strong evidence that the service runs its code.
+  const builtUnit = (s) => {
+    if (!s.build) return null;
+    const { ctxDir, dockerDir } = buildDirs(s);
+    return pick(dockerDir != null && byDir(dockerDir)) || pick(byDir(ctxDir));
+  };
   const buildUnit = (s) => {
     if (!s.build) return null;
-    const ctxDir = joinRel(s.build.composeDir, s.build.context);
-    const dockerDir = s.build.dockerfile ? dirOf(joinRel(ctxDir, s.build.dockerfile)) : null;
+    const { dockerDir } = buildDirs(s);
     const owner = dockerDir != null ? ownerOf(`${dockerDir}/x`) : null;
     // Never fall back to the repo root for a Dockerfile-only folder (an nginx or Caddy proxy).
-    return pick(dockerDir != null && byDir(dockerDir)) || pick(byDir(ctxDir)) || pickByName(unitByShortName.get(s.name.toLowerCase())) || pick(owner && owner.dir !== '' ? owner : null);
+    return builtUnit(s) || pickByName(unitByShortName.get(s.name.toLowerCase())) || pick(owner && owner.dir !== '' ? owner : null);
   };
-  const JOB_NAME = /^(base|builder|build)$|^(pre|post)?[-_]?(start|migrat\w*|init\w*|setup|seed\w*|createbuckets|bootstrap|wait\w*)$|(^|[-_])(migrat\w*|init|setup|seed)([-_]|$)/i;
+  // A service built from a local Dockerfile that starts FROM postgres (or redis, clickhouse...) is that database.
+  const builtFromStore = (s) => {
+    if (!s.build || builtUnit(s)) return null;
+    const { ctxDir } = buildDirs(s);
+    const file = joinRel(ctxDir, s.build.dockerfile ?? 'Dockerfile');
+    const stages = readDockerfile(root, file).from;
+    const last = stages[stages.length - 1];
+    const entry = last ? catalog.matchDockerImage(last.image) : null;
+    return entry && (entry.kind === 'datastore' || entry.kind === 'external') ? { entry, file, line: last.line } : null;
+  };
+  // One-off jobs (migrations, init, permission fixes) run once and exit: not part of the running system.
+  const JOB_NAME = /^(base|builder|build)$|^(pre|post)?[-_]?(start|migrat\w*|init\w*|setup|seed\w*|createbuckets|bootstrap|wait\w*)$|(^|[-_])(migrat\w*|init\w*|setup|seed\w*|bootstrap|perms|permissions|create[-_]?buckets?|db[-_]create|create[-_]?db|provision\w*|wait[-_]for\w*)([-_]|$)/i;
   const SERVER_COMMAND = /\b(rails\s+s(erver)?|puma|unicorn|gunicorn|uvicorn|hypercorn|daphne|runserver|php-fpm|artisan\s+serve|next\s+start|npm\s+(run\s+)?start|yarn\s+start|pnpm\s+start|node\s+\S*(server|main|index)|bun\s+\S*(server|index))/i;
-  // The service named like its unit claims it first, then web servers; one-off jobs go last.
+  // The service named like its unit claims it first, then web servers, then the rest.
   const priority = (s) => {
     const u = buildUnit(s) ?? pickByName(unitByShortName.get(s.name.toLowerCase()));
     if (u && (s.name.toLowerCase() === baseOf(u.dir).toLowerCase() || s.name.toLowerCase() === (u.shortName ?? '').toLowerCase())) return 0;
-    if (JOB_NAME.test(s.name)) return 4;
     if (SERVER_COMMAND.test(s.command)) return 1;
     return /^(web|app|server|api|backend)$/i.test(s.name) ? 2 : 3;
   };
-  // A build-only "base" or "builder" service with no command is not a running process.
-  for (let i = composeList.length - 1; i >= 0; i--) if (/^(base|builder|build)$/i.test(composeList[i].name) && !composeList[i].command) composeList.splice(i, 1);
+  // Units by alias too: "formbricks-cube-image" (folder "cube-image") builds the image "formbricks/cube".
+  const unitAliases = new Map();
+  for (const u of units) {
+    if (isBareRoot(u)) continue;
+    for (const n of [u.shortName, baseOf(u.dir)].filter(Boolean)) {
+      const alias = n.toLowerCase().replace(new RegExp(`^${projectSlug.replace(/[^\w-]/g, '')}[-_]`), '').replace(/[-_](image|docker|container)$/, '');
+      if (alias && !unitByShortName.has(alias) && !unitAliases.has(alias)) unitAliases.set(alias, u);
+    }
+  }
+  // The one runnable app, for an image named after the project ("ghcr.io/formbricks/formbricks").
+  const appCandidates = units.filter((u) => !isBareRoot(u) && !importedLibraries.has(u) && !u.npmLibrary && !LIBRARY_ROOTS.test(u.dir) && (u.appSignals.size > 0 || u.hasMain || (u.dir === '' && u.rootIsApp)));
   // Units by their image name too: "web: image: ghcr.io/mastodon/mastodon" runs the root app "mastodon".
   const unitByImageName = (repo) => {
     if (!repo) return null;
     const last = repo.split('/').pop().toLowerCase();
-    const hit = unitByShortName.get(last);
+    const hit = unitByShortName.get(last) ?? unitAliases.get(last);
     if (hit) return hit;
     const rootUnit = unitsByDir.get('');
-    return rootUnit && !isBareRoot(rootUnit) && (rootUnit.shortName ?? '').toLowerCase() === last ? rootUnit : null;
+    if (rootUnit && !isBareRoot(rootUnit) && (rootUnit.shortName ?? '').toLowerCase() === last) return rootUnit;
+    return last === projectSlug && appCandidates.length === 1 ? appCandidates[0] : null;
   };
   // Database admin UIs and local-only helpers are tools around the system, not part of it.
-  const DEV_TOOL = /^(adminer|dpage\/pgadmin4?|sosedoff\/pgweb|dbgate\/dbgate|phpmyadmin(\/phpmyadmin)?|mongo-express|redis\/redisinsight|redislabs\/redisinsight|rediscommander\/redis-commander|provectuslabs\/kafka-ui|obsidiandynamics\/kafdrop|[\w-]+\/bull-board|letsencrypt\/pebble|portainer\/portainer(-ce)?|containrrr\/watchtower|swaggerapi\/swagger-ui)$/i;
+  const DEV_TOOL = /^(adminer|dpage\/pgadmin4?|sosedoff\/pgweb|dbgate\/dbgate|phpmyadmin(\/phpmyadmin)?|mongo-express|redis\/redisinsight|redislabs\/redisinsight|rediscommander\/redis-commander|provectuslabs\/kafka-ui|obsidiandynamics\/kafdrop|[\w-]+\/bull-board|letsencrypt\/pebble|portainer\/portainer(-ce)?|containrrr\/watchtower|swaggerapi\/swagger-ui|fullstorydev\/grpcui|shopify\/toxiproxy|caioricciuti\/ch-ui|tabix\/tabix)$/i;
   for (let i = composeList.length - 1; i >= 0; i--) {
     const s = composeList[i];
-    if (s.image && !s.build && DEV_TOOL.test(dockerRepo(s.image) ?? '')) composeList.splice(i, 1);
+    const job = JOB_NAME.test(s.name) && !SERVER_COMMAND.test(s.command);
+    // Services behind a compose profile are opt-in extras, unless they build this repo's own code.
+    const optIn = s.profiles && !builtUnit(s);
+    const devTool = s.image && !s.build && DEV_TOOL.test(dockerRepo(s.image) ?? '');
+    if (job || optIn || devTool) composeList.splice(i, 1);
   }
   composeList.sort((a, b) => priority(a) - priority(b));
+  // Compose files for local development: running the same code again there is the dev setup.
+  const isDevCompose = (f) => /(^|\/)(dev|development|local|\.devcontainer)(\/|$)/i.test(dirOf(f)) || /(^|[._-])(dev|develop|development|local|debug)([._-]|$)/i.test(baseOf(f).replace(/\.ya?ml$/i, ''));
   const composeMap = new Map(); // compose service name -> node id
   const imageUnit = new Map(); // image repo -> the unit built into it
   const composeTag = catalog.get('docker-compose') ?? catalog.get('docker');
@@ -429,15 +471,19 @@ export function scan(rootDir, opts = {}) {
     let nodeId = null;
     const evS = evidence(s.file, s.line, s.name, 'compose service', readLine(s.file, s.line));
     const repo = s.image ? dockerRepo(s.image) : null;
-    const u = buildUnit(s);
+    const store = builtFromStore(s);
+    if (store) nodeId = g.tech(store.entry, [evidence(store.file, store.line, store.entry.name, 'Dockerfile base image', readLine(store.file, store.line))]).id;
+    const u = store ? null : buildUnit(s);
     if (u) {
       claim(u, s, s.buildFile ?? s.file, s.build.line);
       // Same code, different process (Django web + Celery worker from one image): draw both.
-      if (u.composeCommands.size > 0 && !u.composeCommands.has(s.command)) nodeId = runsContainer(s, u, evS);
+      // A dev-only compose file running the same code again is the dev setup, unless it is a worker.
+      const another = u.composeCommands.size > 0 && !u.composeCommands.has(s.command);
+      if (another && (!isDevCompose(s.file) || WORKER_NAME.test(s.name) || WORKER_COMMAND.test(s.command))) nodeId = runsContainer(s, u, evS);
       else {
         nodeId = u.id;
         u.composeNames.add(s.name);
-        u.composeCommands.add(s.command);
+        if (!another) u.composeCommands.add(s.command);
         if (repo) imageUnit.set(repo, u);
       }
     }
@@ -664,8 +710,6 @@ export function scan(rootDir, opts = {}) {
   // ------------------------------------------------------------ 5. unit nodes
   const shortNames = new Map();
   for (const u of units) if (!u.drop) shortNames.set(u.shortName, (shortNames.get(u.shortName) ?? 0) + 1);
-  const git = opts.git === false ? {} : gitInfo(root);
-  const projectName = config.name || projectNameOf(root, unitsByDir.get(''), git.repoUrl);
   for (const u of units) {
     if (u.drop) {
       g.removeNode(u.id);
@@ -861,8 +905,8 @@ function shortName(name, eco) {
 // npm scripts that start a server or an app (as opposed to `tsup --watch`, `tsc -w`, `vite build`).
 const RUNNABLE_SCRIPT = /\b(next\s+(dev|start)|nuxt|nuxi\s+(dev|preview)|remix\s+(dev|vite:dev)|astro\s+(dev|preview)|react-router\s+dev|svelte-kit\s+dev|vite(\s+(dev|serve|preview)|\s*$|\s+--(?!watch))|ng\s+serve|react-scripts\s+start|webpack(-dev-server|\s+serve)|parcel(?!\s+build)\s|expo\s+start|react-native\s+start|electron|tauri\s+dev|wrangler\s+dev|node\s|tsx\s|ts-node|nodemon|bun\s+(--watch\s+|--hot\s+|run\s+)?\S+\.[jt]s|deno\s+(run|task)|nest\s+start|fastify\s+start|uvicorn|gunicorn|python|http-server|serve\s+-|serve\s*$)/;
 
-function isRunnable(u) {
-  if (u.hasDockerfile || u.deployable) return true;
+function isRunnable(u, ignoreDockerfile = false) {
+  if ((u.hasDockerfile && !ignoreDockerfile) || u.deployable) return true;
   if ([...u.appSignals].some((f) => f !== 'main.ts' && f !== 'main.js' && f !== 'server.ts' && f !== 'server.js')) return true;
   const sc = u.scripts ?? {};
   if (typeof sc.start === 'string' && !/\b(turbo|nx|lerna)\b/.test(sc.start)) return true;
@@ -876,18 +920,22 @@ function classify(u, dependentCount) {
   const roles = new Set(u.roles);
   for (const f of u.frameworks.values()) if (f.entry.role) roles.add(f.entry.role);
   const label = `${u.dir}/${u.shortName ?? ''}`;
-  const runnable = isRunnable(u);
+  // A Dockerfile in a package other units import, with nothing that starts the package, builds a
+  // tool around it (a migration runner), so it does not make the package a service.
+  const toolImage = u.hasDockerfile && !u.deployable && dependentCount > 0 && !isRunnable(u, true);
+  const runnable = isRunnable(u) && !toolImage;
   const eco = u.manifests[0]?.ecosystem;
   const serverRole = ['backend', 'fullstack', 'mobile', 'desktop'].some((r) => roles.has(r));
   // Shared packages (UI kits, utils, SDKs, embeds) depend on React or Next.js too; that does not
   // make them apps. Being imported by other units is the strongest signal.
-  if (eco === 'npm' && u.dir !== '' && !u.deployable && !u.hasDockerfile && !APP_ROOTS.test(u.dir)) {
+  if (eco === 'npm' && u.dir !== '' && !u.deployable && (!u.hasDockerfile || toolImage) && !APP_ROOTS.test(u.dir)) {
     const appLike = runnable && (serverRole || roles.has('frontend'));
     if (dependentCount > 0 && (u.npmLibrary || !appLike)) return 'library';
     if (!runnable && (u.npmLibrary || LIBRARY_ROOTS.test(u.dir)) && !serverRole) return u.bin ? 'cli' : 'library';
   }
   // A package with a `bin` is a command-line tool unless it is deployed or lives in an apps folder.
-  if (u.bin && !u.deployable && !u.hasDockerfile && (!APP_ROOTS.test(u.dir) || (!serverRole && !roles.has('frontend')))) return 'cli';
+  // A CLI shipped as a Docker image is still a CLI, unless it runs a server or a UI.
+  if (u.bin && !u.deployable && (!(u.hasDockerfile || APP_ROOTS.test(u.dir)) || (!serverRole && !roles.has('frontend')))) return 'cli';
   if (roles.has('mobile')) return 'mobile';
   if (roles.has('desktop')) return 'desktop';
   // React on a backend is often only for emails or SSR; call it an app only when UI code dominates.

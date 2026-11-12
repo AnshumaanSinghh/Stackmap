@@ -148,3 +148,22 @@ test('empty folder', () => {
   assert.equal(g.nodes.length, 0);
   assert.equal(g.edges.length, 0);
 });
+
+test('self-hosting compose files: jobs, opt-in profiles and dev copies are not services', () => {
+  const g = scan(fx('selfhost'), { git: false });
+  const names = g.nodes.map((n) => n.name);
+  for (const gone of ['db-migrate', 'grafana', 'Grafana', 'dev', 'acme', 'database', 'storybook', 'smoke-check', 'scripts', 'OpenAI']) {
+    assert.ok(!names.includes(gone), `${gone} should not be on the map`);
+  }
+  assert.equal(g.nodes.filter((n) => n.unit || n.container).length, 2, 'only the web app and the db package');
+  // "acme: image: ghcr.io/acme/acme" is the project's one app; the dev compose copy of it merges in.
+  const web = byName(g, 'web');
+  assert.equal(web.kind, 'app');
+  assert.ok(web.platforms.includes('Docker Compose'));
+  assert.ok(edge(g, 'web', 'PostgreSQL'), 'compose env on the acme service links the web app');
+  // A service built FROM postgres is PostgreSQL, with the Dockerfile line as evidence.
+  const pg = byName(g, 'PostgreSQL');
+  assert.ok(pg.evidence.some((e) => e.file === 'docker/Dockerfile.postgres' && e.line === 1 && e.why === 'Dockerfile base image'));
+  // A Dockerfile that only packages a migration tool does not turn an imported package into a service.
+  assert.equal(byName(g, 'db').kind, 'library');
+});

@@ -64,7 +64,8 @@ export function readCompose(root, file) {
   for (const [name, svc] of Object.entries(services)) {
     if (!svc || typeof svc !== 'object') continue;
     const line = lineOf(services, name) ?? 1;
-    const s = { name, line, file, image: null, imageLine: line, build: null, dependsOn: [], env: [], links: [], command: '' };
+    const s = { name, line, file, image: null, imageLine: line, build: null, dependsOn: [], env: [], links: [], command: '', profiles: null };
+    if (Array.isArray(svc.profiles) && svc.profiles.length) s.profiles = svc.profiles.map(String);
     if (typeof svc.command === 'string') s.command = svc.command;
     else if (Array.isArray(svc.command)) s.command = svc.command.join(' ');
     if (typeof svc.entrypoint === 'string') s.command = `${svc.entrypoint} ${s.command}`;

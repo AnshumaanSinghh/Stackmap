@@ -845,6 +845,19 @@ export const TECHNOLOGIES = [
     env: ['MINIO_*'],
   },
   {
+    id: 'rustfs', name: 'RustFS', kind: 'datastore', category: 'storage', url: 'https://rustfs.com',
+    docker: ['rustfs/rustfs', 'rustfs/rc'],
+    env: ['RUSTFS_*'],
+  },
+  {
+    id: 'seaweedfs', name: 'SeaweedFS', kind: 'datastore', category: 'storage', url: 'https://github.com/seaweedfs/seaweedfs',
+    docker: ['chrislusf/seaweedfs'],
+  },
+  {
+    id: 'garage', name: 'Garage', kind: 'datastore', category: 'storage', url: 'https://garagehq.deuxfleurs.fr',
+    docker: ['dxflrs/garage'],
+  },
+  {
     id: 'vercel-blob', name: 'Vercel Blob', kind: 'datastore', category: 'storage', url: 'https://vercel.com/docs/storage/vercel-blob',
     npm: ['@vercel/blob'],
     env: ['BLOB_READ_WRITE_TOKEN'],

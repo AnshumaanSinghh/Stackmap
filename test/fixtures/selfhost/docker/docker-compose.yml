@@ -1,0 +1,20 @@
+services:
+  database:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+  db-migrate:
+    build:
+      context: ../packages/db
+    depends_on:
+      - database
+  acme:
+    image: ghcr.io/acme/acme:latest
+    command: npm start
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@database:5432/acme
+  grafana:
+    image: grafana/grafana:11.4.0
+    profiles: ["observability"]
