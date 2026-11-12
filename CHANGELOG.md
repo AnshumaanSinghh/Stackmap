@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (unreleased)
+## 1.0.0
 
 Stackmap is rebuilt from the ground up as a command-line tool that maps a system's architecture from its code. The earlier canvas prototype (a Next.js, Fastify and Socket.io scaffold) is still in the git history.
 
